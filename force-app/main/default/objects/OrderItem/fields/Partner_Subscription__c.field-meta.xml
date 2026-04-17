@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Partner_Subscription__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Shows if Product is Partner Subscription.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Shows if Product is Partner Subscription.</inlineHelpText>
+    <label>Partner Subscription</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

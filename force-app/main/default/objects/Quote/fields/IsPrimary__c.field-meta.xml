@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsPrimary__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Identifies which Quote is Primary since RLM doesn&apos;t do this automatically.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Is this the Primary Quote?</inlineHelpText>
+    <label>Primary</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

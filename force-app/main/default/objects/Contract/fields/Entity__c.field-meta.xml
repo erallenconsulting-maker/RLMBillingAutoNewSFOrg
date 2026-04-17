@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Entity__c</fullName>
+    <externalId>false</externalId>
+    <label>Entity</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Electric AI</fullName>
+                <default>false</default>
+                <label>Electric AI</label>
+            </value>
+            <value>
+                <fullName>Sinu</fullName>
+                <default>false</default>
+                <label>Sinu</label>
+            </value>
+            <value>
+                <fullName>Techvera</fullName>
+                <default>false</default>
+                <label>Techvera</label>
+            </value>
+            <value>
+                <fullName>Contango</fullName>
+                <default>false</default>
+                <label>Contango</label>
+            </value>
+            <value>
+                <fullName>Legacy Techvera</fullName>
+                <default>false</default>
+                <label>Legacy Techvera</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Migration_Status__c</fullName>
+    <description>Migration history tracking field created by Neocol to support 2023 NetSuite to Salesforce migration.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Migration history tracking field created by Neocol to support 2023 NetSuite to Salesforce migration.</inlineHelpText>
+    <label>Migration Status</label>
+    <length>131072</length>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

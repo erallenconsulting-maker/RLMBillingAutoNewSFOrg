@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ShippingName</fullName>
+    <description>Name on the Ship To address for this quote.</description>
+    <inlineHelpText>Name on the Ship To address for this quote.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

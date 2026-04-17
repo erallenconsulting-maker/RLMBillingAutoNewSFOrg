@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Quote_ShippingName__c</fullName>
+    <description>Order field to match the Ship To Name on the Quote that isn&apos;t a Lookup field. For Hardware Quotes, the Ship To Name does not always have a corresponding Contact record.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Who is listed on the Quote&apos;s Ship To Name text field?</inlineHelpText>
+    <label>Quote Ship To Name</label>
+    <length>255</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

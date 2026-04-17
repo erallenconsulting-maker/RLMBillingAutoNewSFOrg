@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Do_Not_Sync__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Controls whether or not the integration will run.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>When set to TRUE this record will not integrate to NetSuite.</inlineHelpText>
+    <label>Do Not Sync</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

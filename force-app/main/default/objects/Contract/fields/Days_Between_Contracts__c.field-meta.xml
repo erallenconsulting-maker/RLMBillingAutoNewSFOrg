@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Days_Between_Contracts__c</fullName>
+    <description>Created for RR-1981. Field is populated by the &quot;Contract - Populate Days Between Contracts Field&quot; flow. Used in reporting only, do not include on layouts. Give end users view only access.</description>
+    <externalId>false</externalId>
+    <label>Days Between Contracts</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

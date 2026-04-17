@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RenewalQuoted__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Select this option to automatically generate a renewal quote on renewal opportunities.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Select this option to automatically generate a renewal quote on renewal opportunities.</inlineHelpText>
+    <label>Renewal Quoted</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

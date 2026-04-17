@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <!-- Standard objects -->
+  <types>
+    <members>Quote</members>
+    <members>QuoteLineItem</members>
+    <members>Order</members>
+    <members>OrderItem</members>
+    <members>Contract</members>
+    <members>Asset</members>
+    <name>CustomObject</name>
+  </types>
+
+  <!-- Custom object -->
+  <types>
+    <members>Partner_Subscription__c</members>
+    <name>CustomObject</name>
+  </types>
+
+  <!-- Custom Metadata Types (MDTs) -->
+  <types>
+    <members>Automation_Toggles__mdt</members>
+    <members>Billing_Schedule_Map__mdt</members>
+    <name>CustomObject</name>
+  </types>
+
+  <!-- Flows + Layouts + Permissions (we'll prune later if needed) -->
+  <types>
+    <members>*</members>
+    <name>Flow</name>
+  </types>
+  <types>
+    <members>*</members>
+    <name>Layout</name>
+  </types>
+  <types>
+    <members>*</members>
+    <name>PermissionSet</name>
+  </types>
+
+  <version>60.0</version>
+</Package>

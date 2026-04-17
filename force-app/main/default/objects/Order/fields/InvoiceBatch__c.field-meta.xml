@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>InvoiceBatch__c</fullName>
+    <externalId>false</externalId>
+    <label>Invoice Batch</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>InvoiceBatch</valueSetName>
+    </valueSet>
+</CustomField>

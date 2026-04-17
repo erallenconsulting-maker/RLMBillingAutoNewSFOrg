@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Flow_Error_Message__c</fullName>
+    <description>Details why the automation failed to update the record.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Details why the automation failed to update the record.</inlineHelpText>
+    <label>Flow Error Message</label>
+    <length>4000</length>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

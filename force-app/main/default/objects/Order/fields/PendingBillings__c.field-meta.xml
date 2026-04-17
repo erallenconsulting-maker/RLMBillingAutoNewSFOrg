@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PendingBillings__c</fullName>
+    <description>Total pending for all order products.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Total pending for all order products.</inlineHelpText>
+    <label>Pending Billing Amount (without tax)</label>
+    <summarizedField>OrderItem.PendingBillings__c</summarizedField>
+    <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

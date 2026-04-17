@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SBQQ_DaysQuoteOpen__c</fullName>
+    <description>Number of days the quote has been opened.</description>
+    <externalId>false</externalId>
+    <formula>IF(OR(ISPICKVAL(Status,&quot;Draft&quot;), ISPICKVAL(Status,&quot;In Review&quot;),ISPICKVAL(Status,&quot;Approved&quot;), ISPICKVAL(Status,&quot;Presented&quot;)),Round(NOW() - CreatedDate,0) ,null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Number of days the quote has been opened.</inlineHelpText>
+    <label>Days Quote Open</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

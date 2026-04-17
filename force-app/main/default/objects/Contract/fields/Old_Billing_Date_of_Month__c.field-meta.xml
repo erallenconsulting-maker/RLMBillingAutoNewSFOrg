@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Old_Billing_Date_of_Month__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Used to match Billinbg date of the month for Ammend</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used to match Billing date of the month for Ammend</inlineHelpText>
+    <label>Old Billing Date of Month</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

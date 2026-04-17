@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Disable_RLM_Automation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Will disable all automation related to RLM</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Disable RLM Automation</label>
+    <type>Checkbox</type>
+</CustomField>

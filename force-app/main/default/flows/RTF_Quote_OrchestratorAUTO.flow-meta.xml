@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <assignments>
+        <description>Sets the errorMessage variable to the fault message from InvokePlaceSalesTransaction invocable action.</description>
+        <name>Set_Error_Variable</name>
+        <label>Set Error Variable</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>Create_Initial_Quote_Techvera_Lifecycle.isSuccess</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Create_Initial_Quote_Techvera_Lifecycle.errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.FaultMessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Has the automation been disabled?</description>
+        <name>Disable_Automation</name>
+        <label>Disable Automation?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Create_Initial_Quote_Techvera_Lifecycle</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Else</defaultConnectorLabel>
+        <rules>
+            <name>End</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Automation_Toggles_mdt.Disable_RLM_Automation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Automation_Toggles_mdt.Disable_Quote_Automation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>End</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Ensures that if the subflow wasn&apos;t successfully triggered, Salesforce Admin should receive an error message.</description>
+        <name>Subflow_Call_Successful</name>
+        <label>Subflow Call Successful?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Set_Error_Variable</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Failure?</defaultConnectorLabel>
+        <rules>
+            <name>Successful</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Create_Initial_Quote_Techvera_Lifecycle.isSuccess</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Successful?</label>
+        </rules>
+    </decisions>
+    <description>Golden Template for RLM Wrapper flow.</description>
+    <environments>Default</environments>
+    <interviewLabel>RTF Quote Orchestrator {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTF Quote Orchestrator</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Calls the Automation Toggle metadata table which has records to deactivate flows when necessary.</description>
+        <name>Automation_Toggles_mdt</name>
+        <label>Automation Toggles Metadata Table</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Disable_Automation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Default</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Automation_Toggles__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Automation_Toggles_mdt</targetReference>
+        </connector>
+    </start>
+    <status>Obsolete</status>
+    <subflows>
+        <name>Create_Initial_Quote_Techvera_Lifecycle</name>
+        <label>Create Initial Quote Techvera Lifecycle</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Subflow_Call_Successful</targetReference>
+        </connector>
+        <flowName>Create_Initial_Quote_Techvera_Lifecycle</flowName>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+</Flow>

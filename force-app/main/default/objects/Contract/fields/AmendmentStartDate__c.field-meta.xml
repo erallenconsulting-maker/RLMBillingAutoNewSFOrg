@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AmendmentStartDate__c</fullName>
+    <description>Start Date of your Amendment. If blank, Amendment will start on today&apos;s date.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Start Date of your Amendment. If blank, Amendment will start on today&apos;s date.</inlineHelpText>
+    <label>Amendment Start Date</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>

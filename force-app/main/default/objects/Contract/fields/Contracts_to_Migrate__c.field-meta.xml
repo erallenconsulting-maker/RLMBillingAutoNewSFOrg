@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contracts_to_Migrate__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Set this field to TRUE when the contract must be migrated.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Set this field to TRUE when the contract must be migrated.</inlineHelpText>
+    <label>Contracts to Migrate</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

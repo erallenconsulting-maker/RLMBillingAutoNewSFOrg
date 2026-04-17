@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>TrayOnOrderFlow_2l2pGj</name>
+        <label>TrayOnOrderFlow_2l2pGj</label>
+        <locationX>100</locationX>
+        <locationY>400</locationY>
+        <actionName>Order.TrayOnOrderFlow_2l2pGj</actionName>
+        <actionType>outboundMessage</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>Order.TrayOnOrderFlow_2l2pGj</nameSegment>
+    </actionCalls>
+    <apiVersion>49.0</apiVersion>
+    <label>TrayOnOrderFlow_2l2pGj</label>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>TrayOnOrderFlow_2l2pGj</targetReference>
+        </connector>
+        <filterFormula>(ISPICKVAL({!$Record.Status} ,&apos;Activated&apos;)) 
+&amp;&amp; ({!$Record.Do_Not_Sync__c}  == false) 
+&amp;&amp; (NOT(ISPICKVAL({!$Record.Integration_Status__c} , &apos;Success&apos;)))</filterFormula>
+        <object>Order</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

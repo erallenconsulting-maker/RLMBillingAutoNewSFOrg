@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NetSuite_RA_Link__c</fullName>
+    <description>Created for the SF/NS integration</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Created for the SF/NS integration</inlineHelpText>
+    <label>NetSuite RA Link</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Url</type>
+</CustomField>

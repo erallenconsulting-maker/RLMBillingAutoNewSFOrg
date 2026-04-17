@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Hardware_Details__c</fullName>
+    <description>New field created to track any Hardware Details (Ticket #, Approved Date, and Approver) for all Quotes/Orders that contain Hardware Lab products.</description>
+    <externalId>false</externalId>
+    <formula>Quote.Hardware_Details__c</formula>
+    <inlineHelpText>What is the related ticket #, Approved Date, and Approver listed on the Quote?</inlineHelpText>
+    <label>Hardware Details</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

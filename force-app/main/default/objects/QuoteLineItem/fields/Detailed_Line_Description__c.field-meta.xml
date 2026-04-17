@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Detailed_Line_Description__c</fullName>
+    <description>Allows for longer Product descriptions since the standard description field is not editable.</description>
+    <externalId>false</externalId>
+    <label>Detailed Line Description</label>
+    <length>4000</length>
+    <trackHistory>false</trackHistory>
+    <type>LongTextArea</type>
+    <visibleLines>3</visibleLines>
+</CustomField>

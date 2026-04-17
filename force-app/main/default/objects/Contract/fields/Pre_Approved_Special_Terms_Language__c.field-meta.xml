@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Pre_Approved_Special_Terms_Language__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(Please_See_Attached__c = True, &quot;Please see attached Addendum for additional agreed-upon terms.&quot; &amp;BR(), null)
+&amp;
+IF(No_Name_Drop__c = True, &quot;12.5 - The section is replaced with the following: Notwithstanding the provisions set forth in Section 5, with the prior written consent of Customer, Electric shall be permitted to disclose that Customer is one of its customers to any third party at its sole discretion (including without limitation by including Customer&apos;s name and logo in customer lists that may be made available on Electric&apos;s website or in Electric&apos;s marketing materials).&quot; &amp;BR() , null)
+&amp;
+IF(Auto_Renewal_Highlight__c = True, &quot;Section 8.1 of the Terms and Conditions highlighted – this Order Form will automatically renew for a new term equal in duration to the existing term, unless notice of non-renewal is received at least 30 days prior to the end of the existing term.&quot; &amp;BR() , null)
+&amp;
+IF(No_Auto_Renew__c = True, &quot;Section 8.1 of the Terms and Conditions modified – last sentence of section deleted (this agreement will not be auto-renewed at the end of its term).&quot; &amp;BR() ,null)
+&amp;
+IF(Yes_Case_Study__c = True, &quot;Customer agrees to participate in a public case study after four months of the term. Case study will not be made public until written approval is provided by the Customer.&quot; &amp;BR() ,null)
+&amp;
+IF(Price_Increase_Upon_Renewal_Cap__c = True, &quot;Sections 7.1 and 8.1 of the Terms and Conditions modified – notwithstanding those sections, Electric agrees that the price per user will not increase by more than 3% upon each renewal compared to the prior price in effect.&quot; &amp;BR() ,null)
+&amp;
+IF(Delaware__c = True, &quot;12.4 - The first two sentences of the section are replaced with the following: This Agreement shall be governed by the laws of the United States and the State of Delaware without regard to its conflict of law provisions. Any disputes arising out of this Agreement shall be brought exclusively in the courts located in the State of Delaware.&quot; &amp;BR() ,null)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Pre-Approved Special Terms Language</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

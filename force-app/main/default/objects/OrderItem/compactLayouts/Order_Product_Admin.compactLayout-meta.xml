@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order_Product_Admin</fullName>
+    <fields>OrderItemNumber</fields>
+    <fields>Product2Id</fields>
+    <fields>UnitPrice</fields>
+    <fields>Quantity</fields>
+    <fields>TotalPrice</fields>
+    <label>Order Product Admin</label>
+</CompactLayout>
