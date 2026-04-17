@@ -1,0 +1,93 @@
+Object/Custom Metadata Type Field Label is Located On,Object/Custom Metadata Type Field API Name is Located On,Field Label,Field API Name,Data Type,Field Description,Should Carry Over Values or Mappings from Object/Metadata Table,Should Carry Over Values or Mappings from Object/Metadata Table API Name,Expected Automation Behavior,Behavior Needs to Occur When?,Current Flow API Name with Expected Automation Behavior,Flow Version,Process Type,Trigger,Flow Triggering Autolaunch Flow?,Trigger Flow Version
+Automation Toggle,Automation_Toggles__mdt,Disable RLM Automation,Disable_RLM_Automation__c,Checkbox,Disables all RLM Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_OrderItem_Automation,Disable_OrderItem_Automation__c,Checkbox,Disables all Order Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Hardware_Only_OrderItem_Auto,Disable_Hardware_Only_OrderItem_Auto__c,Checkbox,Disables only Hardware Orders,OrderItem.Hardware Product?,OrderItem.Hardware_Product__c,Should match Quote Line,Record Creation or Record Update,,,,,,
+Partner Subscription,Partner_Subscription__c,Order Line Item,Order_Line_Item__c,Lookup(Order Line Item),Identifies Order contains Products that are Partner Subscriptions,QuoteLineItem.Partner Subscription?,QuoteLineItem.Partner_Subscription__c,"Connects Custom Object Partner Subscriptions to Order Line Item
+
+Quote Line Items where QuoteLineItem.Partner_Subscriptions__c EQUALS TRUE should NOT be created as Order Item Records. They should ONLY show up in the Partner Subscription related list on the Order Item record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Order Items",Record Creation Only,,,,,,
+OrderItem,OrderItem,Quote Line Item,QuoteLineItemId,Lookup(Quote Line Item),Links the Quote Line Item to the Order Item,QuoteLineItem.Name,QuoteLineItem.Id,Should match Quote Line,,,,,,,
+QuoteLineItem,QuoteLineItem,Product,Product2Id,Lookup(Product),Links Quote Line to Product2,QuoteLineItem.Product,QuoteLineItem.Product2,"This is the Product that should pull into the Quote Line
+
+These Quote Lines should also show up in the Partner Subscription related list on the Quote Line Item record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Order Items",Record Creation Only,,,,,,
+OrderItem,OrderItem,Required By,RequiredBy__c,Lookup(Product),Links Quote Line Item Product,QuoteLineItem.Product,QuoteLineItem.Product2,Should match Quote Line,,,,,,,
+OrderItem,OrderItem,Hardware Order,Hardware_Order__c,Checkbox,Identifies if the Order Item Product is a Hardware Product,QuoteLineItem.Hardware Product?,QuoteLineItem.Hardware_Product__c,"OrderItem.Hardware_Order__c should match QuoteLineItem.Hardware_Product__c
+
+Auto Activate Hardware Orders:
+
+If OrderItem.Hardware_Order__c EQUALS TRUE
+WAIT 1 Minute 
+
+UPDATE Order:
+OrderItem.Status to Activated
+OrderItem.Status__c to Activated
+OrderItem.InvoiceBatch__c to Hardware Order""",Record Creation Only,,,,,,
+OrderItem,OrderItem,Legacy Record?,Legacy__c,Checkbox,Identifies if it is a Legacy record,QuoteLineItem.Legacy Record?,QuoteLineItem.Legacy__c,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Automatically Renew,DoesAutomaticallyRenew__c,Checkbox,Identifies Order Item contains Products that Automatically Renew,QuoteLineItem.Automatically Renew,QuoteLineItem.DoesAutomaticallyRenew__c,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Partner Subscription?,Partner_Subscription__c,Checkbox,Identifies if the Order Item Product is a Partner Subscription,QuoteLineItem.Partner Subscription?,QuoteLineItem.Partner_Subscription__c,"Connects Custom Object Partner Subscriptions to Order Item
+
+Quote Line Items where QuoteLineItem.Partner_Subscriptions__c EQUALS TRUE should NOT be created as Order Item Records. They should ONLY show up in the Partner Subscription related list on the Order Item record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Order Items",Record Creation Only,,,,,,
+OrderItem,OrderItem,Billing Frequency,BillingFrequency__c,Picklist,Identifies Order Item Billing Frequency,QuoteLineItem.Billing Frequency,QuoteLineItem.BillingFrequency__c,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Subscription Term,SubscriptionTerm,Number,Identifies Order Item Subscription Term,QuoteLineItem.Subscription Term,QuoteLineItem.Subscription_Term__c,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Charge Type,Charge_Type__c,Picklist,Identifies Order Item Charge Type,QuoteLineItem.Charge Type,QuoteLineItem.Charge_Type__c,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Billing Schedule,Billing_Schedule__c,Picklist,Identifies Order Item Billing Schedule,QuoteLineItem.Billing Schedule,QuoteLineItem.Billing_Schedule__c,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Start Date,ServiceDate,Date,Identifies Order Item's Start Date,,,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,End Date,EndDate,Date,Identifies Order Item's End Date,,,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Order Product Description,Order_Product_Description__c,Long Text Area,Contains longer version of Product Description,QuoteLineItem.Detailed Line Description,QuoteLineItem.Detailed_Line_Description__c,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Activated,Activated__c,Checkbox,Identies if Order Item has been Activated,,,If OrderItem.Status__c = Activated then this EQUALS TRUE,Record Creation Only,,,,,,
+OrderItem,OrderItem,Contract,Contract__c,Lookup(Contract),Links Order to Contract,Contract.Number,Contract.Id,"If Order is Activated, this should be updated to show the related Contract",Record Update Only,,,,,,
+OrderItem,OrderItem,Contracted,Contracted__c,Checkbox,shows that Order has been Contracted,Contract.Number,Contract.Id,"If Order is Activated, this should be updated to TRUE",Record Update Only,,,,,,
+OrderItem,OrderItem,Do Not Sync,Do_Not_Sync__c,Checkbox,Identifies Order Item if it should sync to NetSuite,QuoteLineItem.Do Not Sync,QuoteLineItem.Do_Not_Sync__c,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Ordered Quantity,Ordered_Quantity__c,Number,Identifies the Quantity Ordered,QuoteLineItem.Quantity,QuoteLineItem.Quantity,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Quantity,Quantity,Number,Identifies Order Item Quantity,QuoteLineItem.Quantity,QuoteLineItem.Quantity,Should match Quote Line,Record Creation Only,,,,,,
+OrderItem,OrderItem,Activation Status,Status__c,Picklist,Identifies Order Item's Activation ,OrderItem.Status,OrderItem.Status,Should match the Order Item's Status,Record Creation or Record Update,,,,,,
+OrderItem,OrderItem,Recipient Street,Recipient_Street__c,Text,Identifies Order Item Recipient Street,Order.Shipping Street,Order.Shipping_Street__c,Should match Order's Shipping Street,Record Creation Only,,,,,,
+OrderItem,OrderItem,Recipient City,Recipient_City__c,Text,Identifies Order Item Recipient City,Order.Shipping City,Order.Shipping_City__c,Should match Order's Shipping City,Record Creation Only,,,,,,
+OrderItem,OrderItem,Recipient State,Recipient_State__c,Text,Identifies Order Item Recipient State,Order.Shipping State,Order.Shipping_State__c,Should match Order's Shipping State,Record Creation Only,,,,,,
+OrderItem,OrderItem,Recipient Zip Code,Recipient_Zip_Code__c,Text,Identifies Order Item Recipient Zip Code,Order.Shipping Postal Code,Order.Shipping_Postal_Code__c,Should match Order's Shipping Postal Code,Record Creation Only,,,,,,
+OrderItem,OrderItem,Recipient Country,Recipient_Country__c,Text,Identifies Order Item Recipient Country,Order.Shipping Country,Order.Shipping_Country__c,Should match Order's Shipping Country,Record Creation Only,,,,,,
+OrderItem,OrderItem,Recipient Name,Recipient_Name__c,Text,Identifies Order Item Recipient Name,Order.Quote Ship To Name,Order.Quote_ShippingName__c,Should match Order's Quote Ship To Name,Record Creation Only,,,,,,
+OrderItem,OrderItem,Billing Date,Billing_Date__c,Date,Carries over Quote Line Item Billing Date,QuoteLineItem.Billing Date,QuoteLineItem.Billing_Date__c,Should match Quote Line's Billing Date,Record Creation Only,,,,,,

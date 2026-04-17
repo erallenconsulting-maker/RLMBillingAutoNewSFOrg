@@ -1,0 +1,75 @@
+Object/Custom Metadata Type Field Label is Located On,Object/Custom Metadata Type Field API Name is Located On,Field Label,Field API Name,Data Type,Field Description,Should Carry Over Values or Mappings from Object/Metadata Table,Should Carry Over Values or Mappings from Object/Metadata Table API Name,Expected Automation Behavior,Behavior Needs to Occur When?,Current Flow API Name with Expected Automation Behavior,Flow Version,Process Type,Trigger,Flow Triggering Autolaunch Flow?,Trigger Flow Version
+Automation Toggle,Automation_Toggles__mdt,Disable RLM Automation,Disable_RLM_Automation__c,Checkbox,Disables all RLM Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Order_Automation,Disable_Order_Automation__c,Checkbox,Disables all Contract Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Hardware_Only_Contract_Automation,Disable_Hardware_Only_Contract_Automation,Checkbox,Disables only Hardware Contracts,Order.Hardware Order,Order.Hardware_Order__c,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Contract,Contract,Account Name,AccountId,Lookup(Account),Links Contract to Account,Order.Account Name,Order.AccountId,Connect Contract to Account,Record Creation Only,,,,,,
+Contract,Contract,Order,Order__c,Lookup(Order),Links Contract to Order,Order.Name,Order.OrderId,Connect Contract to Order,Record Creation Only,,,,,,
+Contract,Contract,Opportunity,Opportunity__c,Lookup(Opportunity),Links Contract to Opportunity,Order.Opportunity,Order.OpportunityId,Connect Contract to Opportunity,Record Creation Only,,,,,,
+Contract,Contract,Quote,Quote__c,Lookup(Quote),Links Contract to Quote,Order.Quote,Order.QuoteId,Connect Contract to Quote,Record Creation Only,,,,,,
+Contract,Contract,Price Book,Pricebook2Id,Lookup(Price Book),Links Contract to Price Book,Quote.Price Book,Quote.PriceBook2Id,"Connect Contract to Price Book
+
+Standard Pricebook2 Id = 01sao000003VWRhAAO",Record Creation Only,,,,,,
+Partner Subscription,Partner_Subscription__c,Contract,Contract__c,Lookup(Contract),Links PartnerSubscription to Contract (Related List),Contract,Contract,"Should be the same as the original Quote that created the Contract
+
+Contract.Partner_Subscription__c where Quote.Partner_Subscription__c EQUALS TRUE should NOT be created as Asset Records. They should ONLY show up in the Partner Subscription related list on the Contract record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Assets",Record Creation Only,,,,,,
+Contract,Contract,ARR,ARR__c,Currency,Tracks Contract ARR,Quote.Total ARR,Quote.Total_ARR__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Billing Frequency,Billing_Frequency__c,Picklist,Tracks Contract Billing Frequency,Quote.Default Billing Frequency,Quote.Default_Billing_Frequency__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Billing Contact,Billing_Contact__c,Lookup(Contact),Tracks Contract Billing Contact,Quote.Bill To Contact,Quote.BillToContactId,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Billing Address,BillingAddress,Address,Tracks Contract Billing Address,Quote.Bill To,Quote.BillingAddress,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Shipping Address,ShippingAddress,Address,Tracks Contract Shipping Address,Quote.Ship To,Quote.ShippingAddress,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Contract End Date,EndDate,Date,Tracks Contract End Date,Quote.End Date,Quote.EndDate__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Contract Has Legacy Product,Contract_Has_Legacy_Product__c,Checkbox,Tracks Contract Has a Legacy Product Asset,Asset.Product.Archived Product?,Asset.Product.Archived_Product__c,If any of the related Asset Products have Archived_Product__c EQUALS TRUE,Record Creation Only,,,,,,
+Contract,Contract,Contract Start Date,ContractStartDate,Date,Tracks Contract Start Date,Quote.Start Date,Quote.StartDate,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Legacy,Legacy__c,Checkbox,Tracks if Contract is a Legacy record,Quote.Legacy Record?,Quote.Legacy__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Master Contract,Master_Contract__c,Checkbox,Tracks if Contract is the Master Contract,,,"Should be set TRUE:
+If this is the first Contract created from a Quote on the Account Quote.Commercial_Action__c = New Business
+If Quote.Master_Contract__c is NOT BLANK",Record Creation Only,,,,,,
+Contract,Contract,Payment Method,Payment_Method__c,Picklist,Tracks Contract Payment Method,Quote.Payment Method,Quote.Payment_Method__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Payment Terms,Payment_Terms__c,Text,Tracks Contract Payment Terms,Quote.Payment Terms,Quote.Payment_Terms__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Do Not Sync,Do_Not_Sync__c,Checkbox,Tracks if Contract should not sync to integrations,Quote.Do Not Sync,Quote.Do_Not_Sync__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,No Auto Renew,No_Auto_Renew__c,Checkbox,Tracks if Contract should not Auto Renew,,,"Should be set TRUE:
+If Original Quote.DoesAutomaticallyRenew__c EQUALS FALSE",Record Creation Only,,,,,,
+Contract,Contract,Original Contract ARR,Original_Contract_ARR__c,Currency,Tracks the Original Contract's ARR,,,"Should be populated:
+If this is the only Contract on the Account then the Contract.ARR__c field should match
+If there are multiple Contracts on an Account, then the first (Original) Contract.ARR__c should be used to populate this field",Record Creation Only,,,,,,
+Contract,Contract,Auto Renewal Highlight,Auto_Renewal_Highlight__c,Checkbox,Tracks if Contract Automatically Renews,Quote.Automatically Renew,Quote.DoesAutomaticallyRenew__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Hardware Order,Hardware_Order__c,Checkbox,Tracks if Contract has Hardware Order Product,Quote.Hardware Order,Quote.Hardware_Order__c,Should be the same as the original Quote that created the Contract,Record Creation Only,,,,,,
+Contract,Contract,Contains Partner Subscriptions?,Contains_Partner_Subscriptions__c,Checkbox,Tracks if Contract has Partner Subscription Products,Quote.Contains Partner Subscriptions?,Quote.Contains_Partner_Subscriptions__c,"Should be the same as the original Quote that created the Contract
+
+Contract.Partner_Subscription__c where Quote.Partner_Subscription__c EQUALS TRUE should NOT be created as Asset Records. They should ONLY show up in the Partner Subscription related list on the Contract record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Assets",Record Creation Only,,,,,,

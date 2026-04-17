@@ -1,0 +1,93 @@
+Object/Custom Metadata Type Field Label is Located On,Object/Custom Metadata Type Field API Name is Located On,Field Label,Field API Name,Data Type,Field Description,Should Carry Over Values or Mappings from Object/Metadata Table,Should Carry Over Values or Mappings from Object/Metadata Table API Name,Expected Automation Behavior,Behavior Needs to Occur When?,Current Flow API Name with Expected Automation Behavior,Flow Version,Process Type,Trigger,Flow Triggering Autolaunch Flow?,Trigger Flow Version
+Automation Toggle,Automation_Toggles__mdt,Disable RLM Automation,Disable_RLM_Automation__c,Checkbox,Disables all RLM Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Order_Automation,Disable_Order_Automation__c,Checkbox,Disables all Order Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Hardware_Only_Order_Automation,Disable_Hardware_Only_Order_Automation__c,Checkbox,Disables only Hardware Orders,Order.Hardware Order,Order.Hardware_Order__c,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Order,Order,Account Name,AccountId,Lookup(Account),Links Order to Account,Quote.Account Name,Quote.Account Name,Connect Order to Account (expected Salesforce Behavior),Record Creation Only,,,,,,
+Order,Order,Billing Account,BillingAccount__c,Lookup(Account),Links Order to Billing Account,Quote.Account Name,Quote.AccountId,Auto populate with the Account,Record Creation Only,,,,,,
+Order,Order,Opportunity Name,OpportunityId,Lookup(Opportunity),Links Order to Opportunity,Opportunity.Name,Opportunity.Id,Connect Order to Opportunity (expected Salesforce Behavior),Record Creation Only,,,,,,
+Order,Order,Bill To Contact,BillToContactId,Lookup(Contact),Links Order to Billing Contact,Quote.Bill To Contact,Quote.BillToContactId,Connects Order to Contact (expected Salesforce Behavior),Record Creation Only,,,,,,
+Order,Order,Quote,QuoteId,Lookup(Quote),Links Order to Quote,Quote.Name,Quote.Id,Connects Order to Quote (expected Salesforce Behavior),Record Creation Only,,,,,,
+Order,Order,Price Book,Pricebook2Id,Lookup(Pricebook2),Links Order to Standard Pricebook2,Pricebook2 Standard Pricebook,Pricebook2.Id,Standard Pricebook2 Id = 01sao000003VWRhAAO,Record Creation Only,,,,,,
+Order,Order,Contract Number,ContractId,Lookup(Contract),Links Order to Contract,Contract.Number,Contract.Id,"If Order is Activated, this should be updated to show the related Contract",Record Creation or Record Update,,,,,,
+Order,Order,Sales Transaction Type,SalesTransactionTypeId,Lookup(Sales Transaction Type),Links Order to Sales Transaction Type for RLM,Sales Transaction Type,SalesTransactionType.Id,Sales Transaction Type Id for New Business = 1ChaZ000000F60HSAS,Record Creation Only,,,,,,
+Partner Subscription,Partner_Subscription__c,Order,Order__c,Lookup(Order),Links PartnerSubscription to Order (Related List),Order,Order,"Connects Custom Object Partner Subscriptions to Order
+
+Quote Line Items where QuoteLineItem.Partner_Subscriptions__c EQUALS TRUE should NOT be created as Order Item Records. They should ONLY show up in the Partner Subscription related list on the Order record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Order Items",Record Creation or Record Update,,,,,,
+Order,Order,Contract Name,ContractName,Text,Shows related Contract's Name,Contract.Name,Contract.Name,"If Order is Activated, this should be updated to show the related Contract's Name",Record Update Only,,,,,,
+Order,Order,Contract End Date,ContractEndDate,Date,Shows related Contract's End Date,Contract.End Date,Contract.EndDate,"If Order is Activated, this should be updated to show the related Contract's End Date",Record Update Only,,,,,,
+Order,Order,Contracted,Contracted__c,Checkbox,shows that Order has been Contracted,Contract.Number,Contract.Id,"If Order is Activated, this should be updated to TRUE",Record Update Only,,,,,,
+Order,Order,Quote Ship To Name,Quote_ShippingName__c,Text,Links Quote's Ship To Name Contact,Quote.Ship To Name,Quote.ShippingName,Auto populates with the Ship To Name entered on the Quote,Record Creation Only,,,,,,
+Order,Order,Hardware Order,Hardware_Order__c,Checkbox,Identifies Order contains only Hardware Products,Quote.Hardware Quote,Quote.Hardware_Quote__c,"Order.Hardware_Order__c should match Quote.Hardware_Quote__c
+
+Auto Activate Hardware Orders:
+
+If Order.Hardware_Order__c EQUALS TRUE
+WAIT 1 Minute 
+
+UPDATE Order:
+Order.Status__c to Activated
+Order.InvoiceBatch__c to Hardware Order""",Record Update Only,,,,,,
+Order,Order,Billing Street,Billing_Street__c,Text Area(255),Custom Address Field for NetSuite Integration,Quote.Billing Street,Quote.BillingStreet,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Billing City,Billing_City__c,Text(40),Custom Address Field for NetSuite Integration,Quote.Billing City,Quote.BillingCity,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Billing State,Billing_State__c,Text(80),Custom Address Field for NetSuite Integration,Quote.Billing State/Province,Quote.BillingState,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Billing Postal Code,Billing_Postal_Code__c,Text(20),Custom Address Field for NetSuite Integration,Quote.Billing Zip/Postal Code,Quote.BillingPostalCode,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Billing Country,Billing_Country__c,Text(80),Custom Address Field for NetSuite Integration,Quote.Billing Country,Quote.BillingCountry,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Shipping Street,Shipping_Street__c,Text Area(255),Custom Address Field for NetSuite Integration,Quote.Shipping Street,Quote.ShippingStreet,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Shipping City,Shipping_City__c,Text(40),Custom Address Field for NetSuite Integration,Quote.Shipping City,Quote.ShippingCity,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Shipping State,Shipping_State__c,Text(80),Custom Address Field for NetSuite Integration,Quote.Shipping State/Province,Quote.ShippingState,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Shipping Postal Code,Shipping_Postal_Code__c,Text(20),Custom Address Field for NetSuite Integration,Quote.Shipping Zip/Postal Code,Quote.ShippingPostalCode,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Shipping Country,Shipping_Country__c,Text(80),Custom Address Field for NetSuite Integration,Quote.Shipping Country,Quote.ShippingCountry,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Status,Status,Picklist,Order Status,,,Set to Draft (Default value),Record Creation Only,,,,,,
+Order,Order,Legacy,Legacy__c,Checkbox,Identifies if it is a Legacy record,,,Defaults to FALSE unless related Quote.Legacy__c is set to TRUE,Record Creation Only,,,,,,
+Order,Order,Automatically Renew,DoesAutomaticallyRenew__c,Checkbox,Identifies Order contains Products that Automatically Renew,Quote.Automatically Renew,Quote.DoesAutomaticallyRenew__c,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,Contains Partner Subscriptions?,Contains_Partner_Subscriptions__c,Checkbox,Identifies Order contains Products that are Partner Subscriptions,Quote.Contains Partner Subscriptions?,Quote.Contains_Partner_Subscriptions__c,"Connects Custom Object Partner Subscriptions to Order
+
+Quote Line Items where QuoteLineItem.Partner_Subscriptions__c EQUALS TRUE should NOT be created as Order Item Records. They should ONLY show up in the Partner Subscription related list on the Order record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Order
+- Order
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Order Items",Record Creation or Record Update,,,,,,
+Order,Order,Payment Method,Payment_Method__c,Picklist,Identifies Order's Payment Method (Rep Entered),,,"DECISION: Order Hardware Payment Terms/Methods Update?
+Order.Hardware_Order__c EQUALS TRUE
+
+UPDATE TRIGGERING RECORD: 
+Order.Payment_Terms__c EQUALS Due on receipt
+Order.Payment_Methods__c EQUALS Credit Card",Record Creation or Record Update,,,,,,
+Order,Order,Payment Terms,PaymentTerms__c,Picklist,Identifies Order's Payment Terms (Rep Entered),,,"DECISION: Order Hardware Payment Terms/Methods Update?
+Order.Hardware_Order__c EQUALS TRUE
+
+UPDATE TRIGGERING RECORD: 
+Order.PaymentTerms__c EQUALS Due on receipt
+Order.Payment_Methods__c EQUALS Credit Card",Record Creation or Record Update,,,,,,
+Order,Order,Start Date,StartDate,Date,Order Start Date,Quote.Start Date,Quote.StartDate,Should match related Quote,Record Creation Only,,,,,,
+Order,Order,End Date,EndDate,Date,Order End Date,Quote.End Date,Quote.EndDate__c,Should match related Quote,Record Creation Only,,,,,,

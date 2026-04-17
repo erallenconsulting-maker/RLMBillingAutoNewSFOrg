@@ -1,0 +1,108 @@
+Object/Custom Metadata Type Field Label is Located On,Object/Custom Metadata Type Field API Name is Located On,Field Label,Field API Name,Data Type,Field Description,Should Carry Over Values or Mappings from Object/Metadata Table,Should Carry Over Values or Mappings from Object/Metadata Table API Name,Expected Automation Behavior,Behavior Needs to Occur When?,Current Flow API Name with Expected Automation Behavior,Flow Version,Process Type,Trigger,Flow Triggering Autolaunch Flow?,Trigger Flow Version
+Automation Toggle,Automation_Toggles__mdt,Disable RLM Automation,Disable_RLM_Automation__c,Checkbox,Disables all RLM Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_QuoteLine_Automation,Disable_QuoteLine_Automation__c,Checkbox,Disables all Quote Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Hardware_Only_QuoteLine_Auto,Disable_Hardware_Only_QuoteLine_Auto__c,Checkbox,Disables only Hardware Quotes,QuoteLineItem.Hardware Product?,QuoteLineItem.Hardware_Product__c,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Product,Product2,Lookup(Product2),Links Quote Line to Product2,Product2,Product2.Id,"This is the Product that should pull into the Quote Line
+
+These Quote Lines should also show up in the Partner Subscription related list on the Quote Line Item record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these QuoteLineItems",Record Creation Only,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Pricebook,Pricebook2Id,Lookup(Pricebook2),Links Quote Line to Standard Pricebook2,Pricebook2 Standard Pricebook,Pricebook2.Id,Standard Pricebook2 Id = 01sao000003VWRhAAO,Record Creation Only,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+Partner Subscription,Partner_Subscription__c,Quote Line Item,Quote_Line_Item__c,Lookup(Quote Line Item),Links PartnerSubscription to Quote (Related List),Quote Line Item,QuoteLineItem.Id,Connects Custom Object Partner Subscriptions to Quote Line Item,Record Creation Only,,,,,,
+QuoteLineItem,QuoteLineItem,Hardware Product?,Hardware_Product__c,Checkbox,Identifies if the Quote Line Product is a Hardware Product,Product2.Hardware Product?,Product2.Hardware_Product__c,"GET RECORDS: Get Quote Line Records
+
+DECISION: Is Hardware Product Checked?
+Yes, Hardware Product
+ASSIGNMENT: Set Quote Hardware Quote EQUALS TRUE Continues to Next Flow Step
+Default Outcome Continues to Next Flow Step",Record Creation Only,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Revenue Calculation Status,Revenue_Calculation_Status__c,Picklist,Provides the status for calculation fields tied to the Revenue Lifecycle.,,,"If currency fields have populated on the Quote Line (fields like ARR, MRR, etc), this status field should be set to ""Calculated""
+If currency fields are blank, this status field should be set to ""Not Calculated""
+If any issues occur and oinly some of the currency fields have been calculated. this status should be set to ""Error""",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Legacy Record?,Legacy__c,Checkbox,Identifies if it is a Legacy record,,,"ASSIGNMENT: Set Quote Line Fields
+EQUALS False",Record Creation Only,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,ARR,ARR__c,Currency,Identifies Quote Line ARR,,,"Should use this formula to populate:
+MRR__c x 12",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,MRR,MRR__c,Currency,Identifies Quote Line MRR,,,"Should use this formula to populate: 
+Net_Total_Price__c x 12 (Monthly payment)",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Delta ARR,Delta_ARR__c,Currency,Identifies Quote Line Delta ARR,,,"Should use this formula to populate (will add additional ARR values like Churn, etc later):
+MRR__c x 12",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,One Time Amount,One_Time_Amount__c,Currency,Identifies if the Quote Line has a Charge Type = One-Time and puts the total amount here,,,"If Quote Line Charge Type = One-Time, this field should match the Total Price",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Recurring Amount,Recurring_Amount__c,Currency,Identifies if the Quote Line has a Charge Type = Recurring and puts the total amount here,,,"If Quote Line Charge Type = Recurring, this field should match the Total Price",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Renewal Amount ARR,Renewal_Amount_ARR__c,Currency,Identifies if the Quote Line Auto-Renews and puts the total amount here,,,"If Quote Line Automatically Renew = TRUE, this field should match the Total Price",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Up For Renewal Amount ARR,Up_For_Renewal_Amount_ARR__c,Currency,Identifies if the Quote Line Auto-Renews and puts the total amount here,,,"If Quote Line Automatically Renew = TRUE, this field should match the Total Price",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Automatically Renew,DoesAutomaticallyRenew__c,Checkbox,Identifies Quote contains Products that Automatically Renew,Product2.Automatically Renew,Product2.DoesAutomaticallyRenew__c,"GET RECORDS: Get Quote Line Records
+
+DECISION: Is Auto Renew Checked?
+Yes, Auto Renew 
+ASSIGNMENT: Set Quote Line Auto Renew EQUALS TRUE Continues to Next Flow Step
+Default Outcome Continues to Next Flow Step",Record Creation Only,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Renewal Date,Renewal_Date__c,Date,Identifies when the Quote Line will be renewed,,,"If Quote Line Automatically Renew = TRUE, set this date to formula: End Date +1",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Next Renewal Date,Next_Renewal_Date__c,Date,Identifies when the Quote Line's next renewal date is,,,"If Quote Line Automatically Renew = TRUE, set this date to formula: End Date +1",Record Creation or Record Update,,,,,,
+QuoteLineItem,QuoteLineItem,Partner Subscription?,Partner_Subscription__c,Checkbox,Identifies if the Quote Line Product is a Partner Subscription,Product2.Partner Subscription,Product2.Partner_Subscription__c,"GET RECORDS: Get Quote Line Records
+
+DECISION: Is Partner Subscription Checked?
+Yes, Partner Subscription 
+ASSIGNMENT: Set Quote Line Contains Partner Subscriptions EQUALS TRUE Continues to Next Flow Step
+Default Outcome Continues to Next Flow Step
+
+These Quote Lines should also show up in the Partner Subscription related list on the Quote Line Item record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Quote Line Items",Record Creation Only,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Billing Frequency,BillingFrequency__c,Picklist,Identifies Quote Line Billing Frequency,Product2.Default Billing Frequency,Product2.Default_Billing_Frequency__c,"Default value should be from the Product2.Default_Billing_Frequency__c 
+OR
+If Quote.Default_Billing_Frequency__c has been set, update this field with that value",Record Creation or Record Update,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Subscription Term,Subscription_Term__c,Number,Identifies Quote Line Subscription Term,Product2.Default Subscription Term,Product2.Default_Subscription_Term__c,"Default value should be from the Product2.Default_Subscription_Term__c 
+OR
+If Quote.Default_Subscription_Term__c has been set, update this field with that value",Record Creation or Record Update,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Charge Type,Charge_Type__c,Picklist,Identifies Quote Line Charge Type,Product2.Default Charge Type,Product2.Default_Charge_Type__c,"Default value should be from the Product2.Default_Charge_Type__c 
+OR
+If Quote.Default_Charge_Type__c has been set, update this field with that value",Record Creation or Record Update,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Billing Schedule,Billing_Schedule__c,Picklist,Identifies Quote Line Billing Schedule,Billing Schedule Map,Billing_Schedule_Map__mdt,"If Rep entered values for Billing Frequency, Charge Type, Subscription Term then this value should update with Billing_Schedule_Result__c value based on table mapping ",Record Creation or Record Update,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Start Date,StartDate,Date,Identifies Quote Line's Start Date,,,Should Default to TODAY(),Record Creation Only,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,End Date,EndDate,Date,Identifies Quote Line's End Date,,,"Should auto populate to a year out from the Start Date for Quote Lines where Charge Type = Recurring
+If Quote Line Charge Type = One-Time, should match the Start Date",Record Creation Only,,,,,,
+QuoteLineItem,QuoteLineItem,Detailed Line Description,Detailed_Line_Description__c,Long Text Area,Contains longer version of Product Description,Product2.Description,Product2.Description,Should be the exact description on the Product,Record Creation Only,Add_QuoteLineItem_to_Quote_Techvera_Lifecycle,1,"
+Autolaunched No Trigger Flow",,,
+QuoteLineItem,QuoteLineItem,Date,ServiceDate,Date,Start Date,,,Should Default to TODAY(),Record Creation Only,,,,,,
+QuoteLineItem,QuoteLineItem,Product Type,Product_Type__c,Picklist,Quote Line Item type of Product,Product2.Techvera Product Type,Product2.Techvera_Product_Type__c,Should be the exact description on the Product,Record Creation Only,,,,,,

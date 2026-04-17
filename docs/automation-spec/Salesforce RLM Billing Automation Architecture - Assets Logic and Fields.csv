@@ -1,0 +1,90 @@
+Object/Custom Metadata Type Field Label is Located On,Object/Custom Metadata Type Field API Name is Located On,Field Label,Field API Name,Data Type,Field Description,Should Carry Over Values or Mappings from Object/Metadata Table,Should Carry Over Values or Mappings from Object/Metadata Table API Name,Expected Automation Behavior,Behavior Needs to Occur When?,Current Flow API Name with Expected Automation Behavior,Flow Version,Process Type,Trigger,Flow Triggering Autolaunch Flow?,Trigger Flow Version
+Automation Toggle,Automation_Toggles__mdt,Disable RLM Automation,Disable_RLM_Automation__c,Checkbox,Disables all RLM Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Order_Automation,Disable_Asset_Automation__c,Checkbox,Disables all Contract Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Hardware_Only_Contract_Automation,Disable_Hardware_Only_Asset_Automation,Checkbox,Disables only Hardware Contracts,QuoteLineItem.Hardware Product?,QuoteLineItem.Hardware_Product__c,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Asset,Asset,Hardware Order,Hardware_Order__c,Checkbox,Tracks if this Asset is Hardware Order,QuoteLineItem.Hardware Product?,QuoteLineItem.Hardware_Product__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Automatically Renew,DoesAutomaticallyRenew,Checkbox,Tracks if Asser Auto Renews,QuoteLineItem.Automatically Renew,QuoteLineItem.DoesAutomaticallyRenew,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Contains Partner Subscriptions?,Contains_Partner_Subscriptions__c,Checkbox,Tracks if Asset is a Partner Subscription,QuoteLineItem.Partner Subscription,QuoteLineItem.Partner_Subscription__c,"Should be the same as the original Quote Line Item that created the Asset
+
+Asset.Partner_Subscription__c where QuoteLineItem.Partner_Subscription__c EQUALS TRUE should NOT be created as Asset Records. They should ONLY show up in the Partner Subscription related list on the Contract record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Assets",,,,,,,
+Partner Subscription,Partner_Subscription__c,Asset,Asset__c,Lookup(Asset),Links PartnerSubscription to Asset (Related List),Asset,Asset,"Should be the same as the original Quote Line Item that created the Asset
+
+Asset.Partner_Subscription__c where QuoteLineItem.Partner_Subscription__c EQUALS TRUE should NOT be created as Asset Records. They should ONLY show up in the Partner Subscription related list on the Contract record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Assets",Record Creation Only,,,,,,
+Asset,Asset,Legacy,Legacy__c,Checkbox,Identifies if Asset is a Legacy record,QuoteLineItem.Legacy,QuoteLineItem.Legacy__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,ARR,ARR__c,Currency,Asset ARR,QuoteLineItem.ARR,QuoteLineItem.ARR__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Billing Frequency,Billing_Frequency__c,Picklist,Asset Billing Frequency,QuoteLineItem.Billing Frequency,QuoteLineItem.BillingFrequency__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,ARR Category,ARR_Category__c,Picklist,What type of Business does this Asset ARR come from,Quote.Commercial Action,Quote.Commercial_Action__c,If the original Quote.Commercial_Action__c EQUALS New Business then set this to New,Record Creation Only,,,,,,
+Asset,Asset,Charge Type,Charge_Type__c,Picklist,Asset's Charge Type,QuoteLineItem.Charge Type,QuoteLineItem.Charge_Type__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Contact,ContactId,Lookup(Contact),Contact associated with Asset,Quote.Contact Name,Quote.ContactId,Should be the same as the original Quote that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Account,AccountId,Lookup(Account),Account associated with Asset,Quote.Account Name,Quote.AccountId,Should be the same as the original Quote that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Contract,ContractId,Lookup(Contract),Contract associated with Asset,Quote.Contract Name,Quote.ContractId,Should be the same as the original Quote that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Product,Product2Id,Lookup(Product),Product associated with Asset,QuoteLineItem.Product,QuoteLineItem.Product2Id,Should be the same as the original Quote that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Line-Level ARR,Line_Level_ARR__c,Currency,Line-Level ARR for Asset,QuoteLineItem.ARR,QuoteLineItem.ARR__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Date,ServiceDate,Date,Start Date for Asset,QuoteLineItem.StartDate,QuoteLineItem.StartDate,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,End Date,EndDate,Date,End Date for Asset,QuoteLineItem.End Date,QuoteLineItem.EndDate,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Billing Date,Billing_Date__c,Date,Billing Date for Asset,QuoteLineItem.Billing Date,QuoteLineItem.Billing_Date__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Subscription Term,SubscriptionTerm,Number,Subscription Term for Asset,QuoteLineItem.Subscription Term,QuoteLineItem.SubscriptionTerm,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Billing Schedule,Billing_Schedule__c,Picklist,Billing Schedule for Asset,QuoteLineItem.Billing Schedule,QuoteLineItem.Billing_Schedule__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Description,Description,Long Text Area,Asset Description,QuoteLineItem.Detailed Line Description,QuoteLineItem.Detailed_Line_Description__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Quote Name,QuoteId,Lookup(Quote),Asset's Quote,QuoteLineItem.Quote Name,QuoteLineItem.QuoteId,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Quote Line,QuoteLine__c,Lookup(Quote Line Item),Asset's Quote Line Item,QuoteLineItem.Name,QuoteLineItem.Id,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Related Quote Line Item,RelatedQuoteLineItemId,Lookup(Quote Line Item),Asset's related Quote Line Item,QuoteLineItem.Name,QuoteLineItem.Id,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Original Quote Line,OriginalQuoteLine__c,Lookup(Quote Line Item),Asset's Original Quote Line Item,QuoteLineItem.Name,QuoteLineItem.Id,"Should be populated:
+If this is the only Quote on the Account then the QuoteLine__c field should match
+If there are multiple Quotes on an Account, then the first (Original) QuoteLineItem.Id should be used to populate this field",Record Creation Only,,,,,,
+Asset,Asset,Order Product,OrderProduct__c,Lookup(Order Product),Asset's Order Product,QuoteLineItem.OrderItem.Name,QuoteLineItem.OrderItem.Id,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Quantity,Quantity,Number,Asset's Quantity,QuoteLineItem.Quantity,QuoteLineItem.Quantity,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,MRR,MRR__c,Currency,Asset's MRR,QuoteLineItem.MRR,QuoteLineItem.MRR__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Delta ARR,Delta_ARR__c,Currency,Asset's Delta ARR,QuoteLineItem.Delta ARR,QuoteLineItem.Delta_ARR__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Renewal Amount ARR,Renewal_Amount_ARR__c,Currency,Asset's Renewal Amoount ARR,QuoteLineItem.Renewal Amount ARR,QuoteLineItem.Renewal_Amount_ARR__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Up for Renewal Amount ARR,Up_for_Renewal_Amount_ARR__c,Currency,Asset's Up For Renewal Amount ARR,QuoteLineItem.Up For Renewal Amount,QuoteLineItem.Up_For_Renewal _Amount__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Renewal Date,Renewal_Date__c,Date,Asset's Renewal Date,QuoteLineItem.Renewal Date,QuoteLineItem.Renewal_Date__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Recurring Amount,Recurring_Amount__c,Currency,Asset's Recurring Product Total Amounts,QuoteLineItem.Recurring Amount,QuoteLineItem.Recurring_Amount__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Revenue Calculation Status,Revenue_Calculation_Status__c,Picklist,Asset's Revenue Calculation Status,QuoteLineItem.Revenue Calculation Status,QuoteLineItem.Revenue_Calculation_Status__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,One Time Amount,One_Time_Amount__c,Currency,Asset's One Time Product Total Amounts,QuoteLineItem.One Time Amount,QuoteLineItem.One_Time_Amount__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Techvera Product Type,Techvera_Product_Type__c,Picklist,Asset's Product Type,QuoteLineItem.Product Type,QuoteLineItem.Product_Type__c,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Subscription Type,Subscription_Type__c,Picklist,Asset's Subscription Type,QuoteLineItem.Product Subscription Type,QuoteLineItem.Product2.Subscription_Type__c,Should be the same as the original Quote Line Item's Product that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Net Price,NetPrice__c,Currency,Asset's Net Price,QuoteLineItem.Net Unit Price,QuoteLineItem.NetUnitPrice,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Net Total,Net_Total__c,Currency,Asset's Net Total,QuoteLineItem.Net Total Price,QuoteLineItem.NetTotalPrice,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Renewal Price,RenewalPrice__c,Currency,Asset's Renewal Price,QuoteLineItem.Sales Price,QuoteLineItem.UnitPrice,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Renewal Uplift,RenewalUpliftRate__c,Percent,Asset's Renewal Uplift percentage,QuoteLineItem.Unit Price Uplift,QuoteLineItem.UnitPriceUplift,Should be the same as the original Quote Line Item that created the Asset,Record Creation Only,,,,,,
+Asset,Asset,Renewal Quantity,RenewalQuantity__c,Number,Asset's Renewal Quantity,QuoteLineItem.Quantity,QuoteLineItem.Quantity,"Should be the same as the original Quote Line Item that created the Asset
+
+If Asset.Subscription_Type__c EQUALS Renewable OR Renewable/Evergreen, then reference Asset.Quantity for Asset.RenewalQuantity__c",Record Creation Only,,,,,,
+Asset,Asset,One Time Product Identifier,Subscription_Term_Implementation__c,Checkbox,Asset's One Time Product Identifier,Asset.Subscription Type,Asset.Subscription_Type__c,"If Asset.Subscription_Type__c EQUALS One-Time, set this field to TRUE",Record Creation Only,,,,,,

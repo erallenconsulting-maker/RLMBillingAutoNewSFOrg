@@ -1,0 +1,213 @@
+Object/Custom Metadata Type Field Label is Located On,Object/Custom Metadata Type Field API Name is Located On,Field Label,Field API Name,Data Type,Field Description,Should Carry Over Values or Mappings from Object/Metadata Table,Should Carry Over Values or Mappings from Object/Metadata Table API Name,Expected Automation Behavior,Behavior Needs to Occur When?,Current Flow API Name with Expected Automation Behavior,Flow Version,Process Type,Trigger,Flow Triggering Autolaunch Flow?,Trigger Flow Version
+Automation Toggle,Automation_Toggles__mdt,Disable RLM Automation,Disable_RLM_Automation__c,Checkbox,Disables all RLM Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,RTF_Quote_Start_Techvera_Lifecycle,2,Autolaunched Flow,Record—Run After Save,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Quote_Automation,Disable_Quote_Automation__c,Checkbox,Disables all Quote Automation,,,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,RTF_Quote_Start_Techvera_Lifecycle,2,Autolaunched Flow,Record—Run After Save,,
+Automation Toggle,Automation_Toggles__mdt,Disable_Hardware_Only_Quote_Automation,Disable_Hardware_Only_Quote_Automation__c,Checkbox,Disables only Hardware Quotes,Quote.Hardware Quote,Quote.Hardware_Quote__c,"GET RECORDS: Metadata Record Name = Default
+
+DECISON: Has the Automation been Disabled?
+EQUALS TRUE Ends Automation
+EQUALS FALSE Continues to Next Flow Step",Record Creation or Record Update,,,,,,
+Quote,Quote,Account Name,AccountId,Lookup(Account),Links Quote to Account,Opportunity.Account Name,Opportunity.AccountId,Connect Quote to Account (expected Salesforce Behavior),Record Creation Only,,,,,,
+Quote,Quote,Account for Quote,QuoteAccountId,Lookup(Account),Links Quote to Account,Opportunity.Account Name,Opportunity.AccountId,Connect Quote to Account (expected Salesforce Behavior),Record Creation Only,,,,,,
+Quote,Quote,Opportunity Name,OpportunityId,Master-Detail(Opportunity),Links Quote to Opportunity,Opportunity.Name,Opportunity.Id,Connect Quote to Opportunity (expected Salesforce Behavior),Record Creation Only,,,,,,
+Quote,Quote,Contact Name,ContactId,Lookup(Contact),Links Quote to Contact,Opportunity Contact Role,OpportunityContactRole,Connects Quote to Contact (expected Salesforce Behavior),Record Creation Only,,,,,,
+Quote,Quote,Bill To Contact,BillToContactId,Lookup(Contact),Links Quote to Billing Contact,Opportunity Contact Role,OpportunityContactRole,Connects Quote to Billing Contact (expected Salesforce Behavior),Record Creation Only,,,,,,
+Quote,Quote,Pricebook,Pricebook2Id,Lookup(Pricebook2),Links Quote to Standard Pricebook2,Pricebook2 Standard Pricebook,Pricebook2.Id,Standard Pricebook2 Id = 01sao000003VWRhAAO,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Contract,ContractId,Lookup(Contract),Links Quote to related Contract,Contract.Name,Contract.Id,Should populate once the related Contract has been generated,,,,,,,
+Quote,Quote,Master Contract,Master_Contract__c,Lookup(Contract),Links Quote to related Contract,Contract.Name,Contract.Id,Should populate once the related Master Contract has been generated (first New Business Contract on the Account),,,,,,,
+Quote,Quote,Sales Transaction Type,SalesTransactionTypeId,Lookup(Sales Transaction Type),Links Quote to Sales Transaction Type for RLM,Sales Transaction Type,SalesTransactionType.Id,Sales Transaction Type Id for New Business = 1ChaZ000000F60HSAS,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Sales Rep,SalesRep__c,Lookup(User),,,,,,,,,,,
+Partner Subscription,Partner_Subscription__c,Quote,Quote__c,Lookup(Quote),Links PartnerSubscription to Quote (Related List),Quote,Quote,"Connects Custom Object Partner Subscriptions to Quote
+
+This Quote's Partner Subscription Quote Lines should also show up in the Partner Subscription related list on the Quote record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Quote Line Items",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Hardware Quote,Hardware_Quote__c,Checkbox,Identifies Quote contains only Hardware Products,QuoteLineItem.Hardware Product?,QuoteLineItem.Hardware_Product__c,"GET RECORDS: Get Quote Line Records
+
+DECISION: Is Hardware Product Checked?
+Yes, Hardware Product
+ASSIGNMENT: Set Quote Hardware Quote EQUALS TRUE Continues to Next Flow Step
+Default Outcome Continues to Next Flow Step",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Bill To Street,BillingStreet__c,Text Area(255),Custom Address Field for NetSuite Integration,Account.Billing Street,Account.BillingStreet,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Bill To City,BillingCity__c,Text(40),Custom Address Field for NetSuite Integration,Account.Billing City,Account.BillingCity,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Bill To State,BillingState__c,Text(80),Custom Address Field for NetSuite Integration,Account.Billing State/Province,Account.BillingState,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Bill To Postal Code,BillingPostalCode__c,Text(20),Custom Address Field for NetSuite Integration,Account.Billing Zip/Postal Code,Account.BillingPostalCode,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Bill To Country,BillingCountry__c,Text(80),Custom Address Field for NetSuite Integration,Account.Billing Country,Account.BillingCountry,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Ship To Street,ShippingStreet__c,Text Area(255),Custom Address Field for NetSuite Integration,Account.Shipping Street,Account.ShippingStreet,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Ship To City,ShippingCity__c,Text(40),Custom Address Field for NetSuite Integration,Account.Shipping City,Account.ShippingCity,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Ship To State,ShippingState__c,Text(80),Custom Address Field for NetSuite Integration,Account.Shipping State/Province,Account.ShippingState,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Ship To Postal Code,ShippingPostalCode__c,Text(20),Custom Address Field for NetSuite Integration,Account.Shipping Zip/Postal Code,Account.ShippingPostalCode,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Ship To Country,ShippingCountry__c,Text(80),Custom Address Field for NetSuite Integration,Account.Shipping Country,Account.ShippingCountry,ASSIGNMENT: Set Quote Fields Pull values for Account fields,Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Status,Status,Picklist,Quote Status,,,"ASSIGNMENT: Set Quote Fields 
+EQUALS Draft (Default value)",Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Comercial Action,Commercial_Action__c,Picklist,RLM Commercial Action,,,"ASSIGNMENT: Set Quote Fields
+EQUALS New Sale",Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Legacy,Legacy__c,Checkbox,Identifies if it is a Legacy record,,,"ASSIGNMENT: Set Quote Fields
+EQUALS False",Record Creation Only,Create_Initial_Quote_Techvera_Lifecycle,3,"
+Autolaunched No Trigger Flow",,,
+Quote,Quote,Total ARR,Total_ARR__c,Currency,Identifies Total ARR on Quote from all Quote Lines ARR,QuoteLineItem.ARR,QuoteLineItem.ARR__c,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS ARR sum for All Quote Lines",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Total MRR,Total_MRR__c,Currency,Identifies Total MRR on Quote from all Quote Lines MRR,QuoteLineItem.MRR,QuoteLineItem.MRR__c,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS MRR sum for All Quote Lines",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,One Time Total,One_Time_Total__c,Currency,Identifies One Time Total on Quote from all Quote Lines One Time Amount,QuoteLineItem.One Time Amount,QuoteLineItem.One_Time_Amount__c,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS One Time Amount sum for All Quote Lines",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Total Delta ARR,Total_Delta_ARR__c,Currency,Identifies Total Delta ARR on Quote from all Quote Lines Delta ARR,QuoteLineItem.Delta ARR,QuoteLineItem.Delta_ARR__c,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS Delta ARR sum for All Quote Lines",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Recurring Total,Recurring_Total__c,Currency,Identifies Recurring Total on Quote from all Quote Lines Recurring Amount,QuoteLineItem.Recurring Amount,QuoteLineItem.Recurring_Amount__c,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS Recurring Amount sum of All Quote Lines",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Total Renewal ARR,Total_Renewal_ARR__c,Currency,Identifies Total Renewal ARR on Quote from all Quote Lines Renewal Amount ARR,QuoteLineItem.Renewal Amount ARR,QuoteLineItem.Renewal_Amount_ARR__c,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS Renewal Amount ARR sum of All Quote Lines",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Total Up For Renewal ARR,Total_Up_For_Renewal_ARR__c,Currency,Identifies Total Up For Renewal ARR on Quote from all Quote Lines Up For Renewal Amount ARR,QuoteLineItem.Up For Renewal Amount ARR,QuoteLineItem.Up_Renewal_Amount_ARR__c,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS Up For Renewal Amount ARR sum of All Quote Lines",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Automatically Renew,DoesAutomaticallyRenew__c,Checkbox,Identifies Quote contains Products that Automatically Renew,QuoteLineItem.Automatically Renew,QuoteLineItem.DoesAutomaticallyRenew__c,"GET RECORDS: Get Quote Line Records
+
+DECISION: Is Auto Renew Checked?
+Yes, Auto Renew 
+ASSIGNMENT: Set Quote Auto Renew EQUALS TRUE Continues to Next Flow Step
+Default Outcome Continues to Next Flow Step",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Renewal Date,Renewal_Date__c,Date,Identifies Renewal Date on Quote from earliest Quote Lines Renewal Date,QuoteLineItem.Renewal Date,QuoteLineItem.Renewal_Date__c,"GET RECORDS: Get Quote Line Records
+
+DECISION: Renewal Date Exists?
+Yes, Renewal Date Continues to Next Decision
+DECISION: Determine Earliest Renewal Date
+True, Update Renewal Date
+ASSIGNMENT: Set Quote Renewal Date
+Default Outcome Continues to Next Flow Step",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Next Renewal Date,Next_Renewal_Date__c,Date,Identifies Next Renewal Date on Quote from earliest Quote Lines Renewal Date,QuoteLineItem.Next Renewal Date,QuoteLineItem.Next_Renewal_Date__c,"GET RECORDS: Get Quote Line Records
+
+DECISION: Next Renewal Date Exists?
+Yes, Next Renewal Date Continues to Next Decision
+DECISION: Determine Earliest Next Renewal date
+True, Update Next Renewal Date
+ASSIGNMENT: Set Quote Next Renewal Date
+Default Outcome Continues to Next Flow Step",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Contains Partner Subscriptions?,Contains_Partner_Subscriptions__c,Checkbox,Identifies Quote contains Products that are Partner Subscriptions,QuoteLineItem. Contains Partner Subscriptions?,QuoteLineItem.Contains_Partner_Subscriptions__c,"GET RECORDS: Get Quote Line Records
+
+DECISION: Is Partner Subscription Checked?
+Yes, Partner Subscription 
+ASSIGNMENT: Set Quote Contains Partner Subscriptions EQUALS TRUE Continues to Next Flow Step
+Default Outcome Continues to Next Flow Step
+
+These Quote Lines should also show up in the Partner Subscription related list on the Quote record with the following information:
+- Partner Subscription Name
+- Product Name
+- Quantity
+- Opportunity
+- Quote
+- Quote Line Item
+- Order
+- Order Item
+- Contract
+- Asset
+
+Do_Not_Sync__c MUST be checked for these Quote Line Items",Record Update Only,Update_Quote_Details_Techvera_Revenue_Rollups,1,"
+Autolaunched No Trigger Flow",,After_Save_Quote_Line_Item,1
+Quote,Quote,Quoteed?,Quoteed__c,Checkbox,Identifies if Quote has been Quoteed,,,"DECISION: Primary Quote Not Quoteed?
+Primary Quote.Quoteed__c EQUALS FALSE
+AND Primary Quote.Hardware_Quote__c EQUALS FALSE
+AND Primary Quote.Status EQUALS Approved OR Accepted
+
+UPDATE TRIGGERING RECORD:
+Primary Quote.Quoteed__c checkbox EQUALS TRUE
+Auto Create Quote",Record Update Only,,,,,,
+Quote,Quote,Quoteed?,Quoteed__c,Checkbox,Identifies if Hardware Quote has been Quoteed,,,"DECISION: Primary Quote Hardware and Not Quoteed?
+Primary Quote.Quoteed__c EQUALS FALSE
+AND Primary Quote.Hardware_Quote__c EQUALS TRUE
+AND Primary Quote.Opportunity.StageName ISCHANGED EQUALS TRUE
+AND Primary Quote.Opportunity.StageName EQUAL Closed Won
+
+UPDATE Primary Quote.Quoteed__c checkbox EQUALS TRUE
+Auto Create Quote WAIT 1 Minute 
+
+UPDATE TRIGGERING RECORD: 
+Quote.Status to Activated
+Quote.InvoiceBatch__c to Hardware Quote",Record Update Only,,,,,,
+Quote,Quote,Primary,IsPrimary__c,Checkbox,Identifies if Quote is Primary,,,"DECISION: New Quote?
+
+UPDATE TRIGGERING RECORD:
+Quote.IsPrimary__c EQUALS TRUE
+
+OR
+
+DECISION: Quote Approved or Accepted?
+Quote.IsPrimary__c EQUALS FALSE
+AND
+Quote.Status EQUALS Accepted
+OR
+Quote.Status EQUALS Approved
+
+UPDATE TRIGGERING RECORD:
+Quote.IsPrimary__c EQUALS TRUE",Record Creation or Record Update,,,,,,
+Quote,Quote,Payment Method,Payment_Method__c,Picklist,Identifies Quote's Payment Method (Rep Entered),,,"DECISION: Quote Hardware Payment Terms/Methods Update?
+Quote.Hardware_Quote__c EQUALS TRUE
+
+UPDATE TRIGGERING RECORD: 
+Quote.Payment_Terms__c EQUALS Due on receipt
+Quote.Payment_Methods__c EQUALS Credit Card",Record Creation or Record Update,,,,,,
+Quote,Quote,Payment Terms,Payment_Terms__c,Picklist,Identifies Quote's Payment Terms (Rep Entered),,,"DECISION: Quote Hardware Payment Terms/Methods Update?
+Quote.Hardware_Quote__c EQUALS TRUE
+
+UPDATE TRIGGERING RECORD: 
+Quote.Payment_Terms__c EQUALS Due on receipt
+Quote.Payment_Methods__c EQUALS Credit Card",Record Creation or Record Update,,,,,,
+Quote,Quote,Default Billing Frequency,Default_Billing_Frequency__c,Picklist,Identifies Quote's Billing Frequency (Rep Entered),,,"If aRep enters a value into this field, it should carry over to the corresponding Quote Lines that are NOT One-Time",Record Creation or Record Update,,,,,,
+Quote,Quote,Default Subscription Term,Default_Subscription_Term__c,Number,Identifies Quote's Default Subscription Term (Rep Entered),,,"If a Rep enters a value into this field, it should carry over to the corresponding Quote Lines that are NOT One-Time",Record Creation or Record Update,,,,,,
+Quote,Quote,Default Charge Type,Default_Charge_Type__c,Picklist,Identifies Quote's Default Charge Type (Rep Entered),,,"If a Rep enters a value into this field, it should carry over to the corresponding Quote Lines",Record Creation or Record Update,,,,,,
+Quote,Quote,Default Billing Schedule,Default_Billing_Schedule__c,Picklist,Identifies Quote's Default Billing Schedule,Billing Schedule Map,Billing_Schedule_Map__mdt,"If Rep entered default values for Billing Frequency, Charge Type, Subscription Term then this value should update with Billing_Schedule_Result__c value based on table mapping ",Record Creation or Record Update,,,,,,
+Quote,Quote,Billing Schedule Status,Billing_Schedule_Status__c,Picklist,Indicates if a Billing Schedule mapping result was identified and successfully populated the Default Billing Schedule field,,,"If Default Billing Schedule has been populated, the status should be ""Derived"".
+If no value could be found and the Default Billing Schedule field is blank, set the status to ""Needs Review""",Record Creation or Record Update,,,,,,
+Quote,Quote,Calculate Checkbox,Calculate_Checkbox__c,Checkbox,Checked to show all price totals have been Calculated,,,"When Quote Lines are added or updated, this should be checked after all the product amounts have been calculated.",Record Update Only,,,,,,
+Quote,Quote,Applied Discount,AppliedDiscount,Percent,Should contain the total percentage of Applied Discounts for Quote Lines,QuoteLineItem.Discount,QuoteLineItem.Discount,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS Discount (Percentage) sum for All Quote Lines",Record Update Only,,,,,,
+Quote,Quote,Applied Discount Amount,AppliedDiscountAmount,Currency,Should contain the total percentage of Applied Discount Amounts for Quote Lines,QuoteLineItem.Discount Amount,QuoteLineItem.DiscountAmount,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS Discount (Amount) sum for All Quote Lines",Record Update Only,,,,,,
+Quote,Quote,Grand Total,GrandTotal,Currency,Should show the grand total from all Quote LInes,QuoteLineItem.Net Total Price,QuoteLineItem.NetTotalPrice,"ASSIGNMENT: Add Quote Line Values to Totals
+EQUALS Net Total Price sum for All Quote Lines",Record Update Only,,,,,,
+Quote,Quote,Revenue Calculation Status,Revenue_Calculation_Status__c,Picklist,Provides the status for calculation fields tied to the Revenue Lifecycle.,,,"If currency fields have populated on the Quote (fields like ARR, MRR, etc), this status field should be set to ""Calculated""
+If currency fields are blank, this status field should be set to ""Not Calculated""
+If any issues occur and oinly some of the currency fields have been calculated. this status should be set to ""Error""",Record Update Only,Create_Initial_Quote_Techvera_Lifecycle,3,Autolaunched Flow,,,
+Quote,Quote,Start Date,StartDate,Date,Earliest Start Date for Quote,,,Should be populated with the earliest Quote Line Start Date,Record Update Only,,,,,,
+Quote,Quote,End Date,EndDate__c,Date,Latest End Date for Quote,,,Should be populated with the latest Quote Line End Date,Record Update Only,,,,,,
