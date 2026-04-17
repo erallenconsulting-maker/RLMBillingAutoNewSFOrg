@@ -3,7 +3,6 @@
     <fullName>Disable_RLM_Automation__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Will disable all automation related to RLM</description>
-    <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Disable RLM Automation</label>
     <type>Checkbox</type>

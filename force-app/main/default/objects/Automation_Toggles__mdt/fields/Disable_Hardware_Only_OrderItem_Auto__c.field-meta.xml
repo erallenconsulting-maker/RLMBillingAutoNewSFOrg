@@ -3,7 +3,6 @@
     <fullName>Disable_Hardware_Only_OrderItem_Auto__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Should only Disable Hardware Order Item automation</description>
-    <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Disable_Hardware_Only_OrderItem_Auto</label>
     <type>Checkbox</type>

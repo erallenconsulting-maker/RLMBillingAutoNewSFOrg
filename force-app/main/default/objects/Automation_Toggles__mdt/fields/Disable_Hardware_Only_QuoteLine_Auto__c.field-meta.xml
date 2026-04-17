@@ -3,7 +3,6 @@
     <fullName>Disable_Hardware_Only_QuoteLine_Auto__c</fullName>
     <defaultValue>false</defaultValue>
     <description>Should only Disable Hardware Quote Line automation</description>
-    <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <inlineHelpText>Should only Disable Hardware Quote Line automation</inlineHelpText>
     <label>Disable_Hardware_Only_QuoteLine_Auto</label>
