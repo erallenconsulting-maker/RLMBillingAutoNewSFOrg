@@ -169,7 +169,7 @@
         <name>Computed_End_Date</name>
         <dataType>Date</dataType>
         <expression
-    >IF({!Final_Charge_Type}=&quot;One-Time&quot;, {!Default_Start_Date}, {!Default_Start_Date}+365)</expression>
+    >IF({!Final_Charge_Type}=&quot;One-Time&quot;, {!Default_Start_Date}, ADDMONTHS({!Default_Start_Date}, 12))</expression>
     </formulas>
     <formulas>
         <name>Default_Start_Date</name>
