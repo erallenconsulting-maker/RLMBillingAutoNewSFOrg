@@ -42,6 +42,24 @@ for path in rtf_files:
     if child_order != expected:
         raise SystemExit(f'Unexpected start order in {path.name}: {child_order}')
 
+    formula_names = []
+    for f in root.findall('m:formulas', NS):
+        n = f.find('m:name', NS)
+        if n is not None:
+            formula_names.append(n.text)
+    if 'frmIsNewRecord' not in formula_names:
+        raise SystemExit(f'Missing frmIsNewRecord formula in {path.name}')
+
+for path in subflow_files:
+    root = ET.parse(path).getroot()
+    var_names = []
+    for v in root.findall('m:variables', NS):
+        n = v.find('m:name', NS)
+        if n is not None:
+            var_names.append(n.text)
+    if 'inIsNewRecord' not in var_names:
+        raise SystemExit(f'Missing inIsNewRecord variable in {path.name}')
+
 print('Validation OK: generated flow metadata is well-formed and schema-aware.')
 PY
 

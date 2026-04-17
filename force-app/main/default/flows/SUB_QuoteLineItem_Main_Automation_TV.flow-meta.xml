@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <environments>Default</environments>
@@ -21,20 +21,17 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <description
-  >Main automation subflow generated from configured CSV spec for QuoteLineItem. CSV rows: 25. Field samples: Product2, Pricebook2Id, Hardware_Product__c, Revenue_Calculation_Status__c, Legacy__c.</description>
-    <interviewLabel
-  >SUB_QuoteLineItem_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <description>Main automation subflow for QuoteLineItem — generated from CSV spec. Field updates mapped: 9 (6 create-only, 0 update-only, 3 always). 16 field(s) skipped (no resolvable source reference): Pricebook2Id, Revenue_Calculation_Status__c, Legacy__c, ARR__c, MRR__c, Delta_ARR__c, One_Time_Amount__c, Recurring_Amount__c... Admin note: review skipped fields and child-rollup fields manually.</description>
+    <interviewLabel>SUB_QuoteLineItem_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB QuoteLineItem Main Automation TV</label>
     <recordLookups>
         <name>Get_Triggering_Record</name>
         <label>Get Triggering Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound
-    >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Run_Summary</targetReference>
+            <targetReference>Get_Product2</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -48,23 +45,140 @@
         <object>QuoteLineItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <assignments>
-        <name>Set_Run_Summary</name>
-        <label>Set Run Summary</label>
+    <recordLookups>
+        <name>Get_Product2</name>
+        <label>Get Product2</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outRunSummary</assignToReference>
-            <operator>Assign</operator>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Record_Always</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
             <value>
-                <stringValue
-        >CSV rows=25; objectToggle=Disable_QuoteLine_Automation__c; hardwareToggle=Disable_Hardware_Only_QuoteLine_Auto__c</stringValue>
+                <elementReference>Get_Triggering_Record.Product2Id</elementReference>
             </value>
-        </assignmentItems>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Product2</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Record_Always</name>
+        <label>Update Record — Always Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Decide_Create_Or_Update</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>BillingFrequency__c</field>
+            <value>
+                <elementReference>Get_Product2.Default_Billing_Frequency__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subscription_Term__c</field>
+            <value>
+                <elementReference>Get_Product2.Default_Subscription_Term__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Charge_Type__c</field>
+            <value>
+                <elementReference>Get_Product2.Default_Charge_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <object>QuoteLineItem</object>
+    </recordUpdates>
+    <decisions>
+        <name>Decide_Create_Or_Update</name>
+        <label>Create or Update?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Log_Main_Subflow_Execution</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Update</defaultConnectorLabel>
+        <rules>
+            <name>Is_Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inIsNewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Record_Create</targetReference>
+            </connector>
+            <label>Create</label>
+        </rules>
+    </decisions>
+    <recordUpdates>
+        <name>Update_Record_Create</name>
+        <label>Update Record — Create-Only Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Log_Main_Subflow_Execution</targetReference>
         </connector>
-    </assignments>
+        <inputAssignments>
+            <field>Product2</field>
+            <value>
+                <elementReference>Get_Product2.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Hardware_Product__c</field>
+            <value>
+                <elementReference>Get_Product2.Hardware_Product__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DoesAutomaticallyRenew__c</field>
+            <value>
+                <elementReference>Get_Product2.DoesAutomaticallyRenew__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Partner_Subscription__c</field>
+            <value>
+                <elementReference>Get_Product2.Partner_Subscription__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Detailed_Line_Description__c</field>
+            <value>
+                <elementReference>Get_Product2.Description</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Type__c</field>
+            <value>
+                <elementReference>Get_Product2.Techvera_Product_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <object>QuoteLineItem</object>
+    </recordUpdates>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>
@@ -110,7 +224,7 @@
         <inputAssignments>
             <name>inMessage</name>
             <value>
-                <elementReference>outRunSummary</elementReference>
+                <stringValue>Mapped 9 field(s). 6 create-only, 0 update-only, 3 always. Skipped 16 (no source).</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -123,14 +237,21 @@
     </start>
     <status>Draft</status>
     <variables>
-        <name>inRecordId</name>
+        <name>inCorrelationId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>inCorrelationId</name>
+        <name>inIsNewRecord</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>inRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

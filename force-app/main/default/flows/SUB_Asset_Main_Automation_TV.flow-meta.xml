@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <environments>Default</environments>
@@ -21,20 +21,17 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <description
-  >Main automation subflow generated from configured CSV spec for Asset. CSV rows: 41. Field samples: Hardware_Order__c, DoesAutomaticallyRenew, Contains_Partner_Subscriptions__c, Legacy__c, ARR__c.</description>
-    <interviewLabel
-  >SUB_Asset_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <description>Main automation subflow for Asset — generated from CSV spec. Field updates mapped: 37 (37 create-only, 0 update-only, 0 always). 3 field(s) skipped (no resolvable source reference): OrderProduct__c, Up_for_Renewal_Amount_ARR__c, Subscription_Type__c Admin note: review skipped fields and child-rollup fields manually.</description>
+    <interviewLabel>SUB_Asset_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB Asset Main Automation TV</label>
     <recordLookups>
         <name>Get_Triggering_Record</name>
         <label>Get Triggering Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound
-    >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Run_Summary</targetReference>
+            <targetReference>Get_QuoteLineItem</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -48,23 +45,312 @@
         <object>Asset</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <assignments>
-        <name>Set_Run_Summary</name>
-        <label>Set Run Summary</label>
+    <recordLookups>
+        <name>Get_QuoteLineItem</name>
+        <label>Get QuoteLineItem</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outRunSummary</assignToReference>
-            <operator>Assign</operator>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Quote</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
             <value>
-                <stringValue
-        >CSV rows=41; objectToggle=Disable_Asset_Automation__c; hardwareToggle=Disable_Hardware_Only_Asset_Automation__c</stringValue>
+                <elementReference>Get_Triggering_Record.QuoteLine__c</elementReference>
             </value>
-        </assignmentItems>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>QuoteLineItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Quote</name>
+        <label>Get Quote</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decide_Create_Or_Update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Record.QuoteId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Quote</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <decisions>
+        <name>Decide_Create_Or_Update</name>
+        <label>Create or Update?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Log_Main_Subflow_Execution</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Update</defaultConnectorLabel>
+        <rules>
+            <name>Is_Create</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inIsNewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Record_Create</targetReference>
+            </connector>
+            <label>Create</label>
+        </rules>
+    </decisions>
+    <recordUpdates>
+        <name>Update_Record_Create</name>
+        <label>Update Record — Create-Only Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Log_Main_Subflow_Execution</targetReference>
         </connector>
-    </assignments>
+        <inputAssignments>
+            <field>Hardware_Order__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Hardware_Product__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DoesAutomaticallyRenew</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.DoesAutomaticallyRenew</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Legacy__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Legacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ARR__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.ARR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Frequency__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.BillingFrequency__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ARR_Category__c</field>
+            <value>
+                <elementReference>Get_Quote.Commercial_Action__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Charge_Type__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Charge_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Get_Quote.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>Get_Quote.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContractId</field>
+            <value>
+                <elementReference>Get_Quote.ContractId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product2Id</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Product2Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Line_Level_ARR__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.ARR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServiceDate</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.StartDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EndDate</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.EndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Date__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Billing_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SubscriptionTerm</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.SubscriptionTerm</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Schedule__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Billing_Schedule__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Description</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Detailed_Line_Description__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>QuoteId</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.QuoteId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>QuoteLine__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RelatedQuoteLineItemId</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OriginalQuoteLine__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Quantity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MRR__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.MRR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Delta_ARR__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Delta_ARR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Amount_ARR__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Renewal_Amount_ARR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Date__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Renewal_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Recurring_Amount__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Recurring_Amount__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Revenue_Calculation_Status__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Revenue_Calculation_Status__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>One_Time_Amount__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.One_Time_Amount__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Techvera_Product_Type__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Product_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>NetPrice__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.NetUnitPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Net_Total__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.NetTotalPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RenewalPrice__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.UnitPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RenewalUpliftRate__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.UnitPriceUplift</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RenewalQuantity__c</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Quantity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subscription_Term_Implementation__c</field>
+            <value>
+                <elementReference>Get_Triggering_Record.Subscription_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <object>Asset</object>
+    </recordUpdates>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>
@@ -110,7 +396,7 @@
         <inputAssignments>
             <name>inMessage</name>
             <value>
-                <elementReference>outRunSummary</elementReference>
+                <stringValue>Mapped 37 field(s). 37 create-only, 0 update-only, 0 always. Skipped 3 (no source).</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -123,14 +409,21 @@
     </start>
     <status>Draft</status>
     <variables>
-        <name>inRecordId</name>
+        <name>inCorrelationId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>inCorrelationId</name>
+        <name>inIsNewRecord</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>inRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
