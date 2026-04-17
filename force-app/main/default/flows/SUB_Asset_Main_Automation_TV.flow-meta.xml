@@ -22,7 +22,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <description
-  >Main automation subflow generated from Salesforce RLM Billing Automation Architecture - Assets Logic and Fields.csv. CSV rows for Asset: 41. Field samples: Hardware_Order__c, DoesAutomaticallyRenew, Contains_Partner_Subscriptions__c, Legacy__c, ARR__c.</description>
+  >Main automation subflow generated from configured CSV spec for Asset. CSV rows: 41. Field samples: Hardware_Order__c, DoesAutomaticallyRenew, Contains_Partner_Subscriptions__c, Legacy__c, ARR__c.</description>
     <interviewLabel
   >SUB_Asset_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB Asset Main Automation TV</label>

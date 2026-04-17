@@ -22,7 +22,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <description
-  >Router flow generated from Salesforce RLM Billing Automation Architecture - Order Logic and Fields.csv. Uses SUB_Evaluate_Automation_Context_TV and calls SUB_Order_Main_Automation_TV when context allows.</description>
+  >Router flow generated from configured CSV spec for Order. Uses SUB_Evaluate_Automation_Context_TV and calls SUB_Order_Main_Automation_TV when context allows.</description>
     <interviewLabel
   >RTF_Order_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RTF Order AfterSave TV</label>

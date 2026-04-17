@@ -22,7 +22,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <description
-  >Router flow generated from Salesforce RLM Billing Automation Architecture - QuoteLIneItem Logic and Fields.csv. Uses SUB_Evaluate_Automation_Context_TV and calls SUB_QuoteLineItem_Main_Automation_TV when context allows.</description>
+  >Router flow generated from configured CSV spec for QuoteLineItem. Uses SUB_Evaluate_Automation_Context_TV and calls SUB_QuoteLineItem_Main_Automation_TV when context allows.</description>
     <interviewLabel
   >RTF_QuoteLineItem_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RTF QuoteLineItem AfterSave TV</label>

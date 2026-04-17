@@ -22,7 +22,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <description
-  >Main automation subflow generated from Salesforce RLM Billing Automation Architecture - Quote Logic and Fields.csv. CSV rows for Quote: 52. Field samples: AccountId, QuoteAccountId, OpportunityId, ContactId, BillToContactId.</description>
+  >Main automation subflow generated from configured CSV spec for Quote. CSV rows: 52. Field samples: AccountId, QuoteAccountId, OpportunityId, ContactId, BillToContactId.</description>
     <interviewLabel
   >SUB_Quote_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB Quote Main Automation TV</label>

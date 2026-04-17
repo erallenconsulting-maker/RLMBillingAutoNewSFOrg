@@ -22,7 +22,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <description
-  >Router flow generated from Salesforce RLM Billing Automation Architecture - Contract Logic and Fields.csv. Uses SUB_Evaluate_Automation_Context_TV and calls SUB_Contract_Main_Automation_TV when context allows.</description>
+  >Router flow generated from configured CSV spec for Contract. Uses SUB_Evaluate_Automation_Context_TV and calls SUB_Contract_Main_Automation_TV when context allows.</description>
     <interviewLabel
   >RTF_Contract_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RTF Contract AfterSave TV</label>

@@ -30,7 +30,7 @@ objects:
   - object_api: Contract
     csv_spec: docs/automation-spec/Salesforce RLM Billing Automation Architecture - Contract Logic and Fields.csv
     object_disable_toggle_field: Disable_Contract_Automation__c
-    hardware_disable_toggle_field: Disable_Hardware_Only_Contrac_Automation__c
+    hardware_disable_toggle_field: Disable_Hardware_Only_Contract_Automation__c
     hardware_context_field: Hardware_Order__c
     main_subflow_api: SUB_Contract_Main_Automation_TV
 

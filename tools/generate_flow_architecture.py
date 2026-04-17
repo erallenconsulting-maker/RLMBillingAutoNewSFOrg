@@ -136,7 +136,7 @@ def generate_router_flow(config: dict[str, str]) -> ET.Element:
 
     root = ET.Element(qname("Flow"))
     add_common_flow_metadata(root)
-    add(root, "description", f"Router flow generated from {Path(config['csv_spec']).name}. Uses SUB_Evaluate_Automation_Context_TV and calls {config['main_subflow_api']} when context allows.")
+    add(root, "description", f"Router flow generated from configured CSV spec for {object_api}. Uses SUB_Evaluate_Automation_Context_TV and calls {config['main_subflow_api']} when context allows.")
     add(root, "interviewLabel", f"{flow_api} {{!$Flow.CurrentDateTime}}")
     add(root, "label", flow_api.replace("_", " "))
 
@@ -277,7 +277,7 @@ def generate_main_subflow(config: dict[str, str], summary_rows: int, field_sampl
 
     root = ET.Element(qname("Flow"))
     add_common_flow_metadata(root)
-    add(root, "description", f"Main automation subflow generated from {Path(config['csv_spec']).name}. CSV rows for {object_api}: {summary_rows}. Field samples: {sample_text}.")
+    add(root, "description", f"Main automation subflow generated from configured CSV spec for {object_api}. CSV rows: {summary_rows}. Field samples: {sample_text}.")
     add(root, "interviewLabel", f"{flow_api} {{!$Flow.CurrentDateTime}}")
     add(root, "label", flow_api.replace("_", " "))
 

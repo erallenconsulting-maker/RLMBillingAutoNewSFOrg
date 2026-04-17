@@ -22,7 +22,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <description
-  >Main automation subflow generated from Salesforce RLM Billing Automation Architecture - Order Logic and Fields.csv. CSV rows for Order: 31. Field samples: AccountId, BillingAccount__c, OpportunityId, BillToContactId, QuoteId.</description>
+  >Main automation subflow generated from configured CSV spec for Order. CSV rows: 31. Field samples: AccountId, BillingAccount__c, OpportunityId, BillToContactId, QuoteId.</description>
     <interviewLabel
   >SUB_Order_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB Order Main Automation TV</label>

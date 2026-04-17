@@ -22,7 +22,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <description
-  >Router flow generated from Salesforce RLM Billing Automation Architecture - Assets Logic and Fields.csv. Uses SUB_Evaluate_Automation_Context_TV and calls SUB_Asset_Main_Automation_TV when context allows.</description>
+  >Router flow generated from configured CSV spec for Asset. Uses SUB_Evaluate_Automation_Context_TV and calls SUB_Asset_Main_Automation_TV when context allows.</description>
     <interviewLabel
   >RTF_Asset_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RTF Asset AfterSave TV</label>

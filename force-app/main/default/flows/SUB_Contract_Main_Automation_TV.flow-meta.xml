@@ -22,7 +22,7 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <description
-  >Main automation subflow generated from Salesforce RLM Billing Automation Architecture - Contract Logic and Fields.csv. CSV rows for Contract: 23. Field samples: AccountId, Order__c, Opportunity__c, Quote__c, Pricebook2Id.</description>
+  >Main automation subflow generated from configured CSV spec for Contract. CSV rows: 23. Field samples: AccountId, Order__c, Opportunity__c, Quote__c, Pricebook2Id.</description>
     <interviewLabel
   >SUB_Contract_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB Contract Main Automation TV</label>
@@ -58,7 +58,7 @@
             <operator>Assign</operator>
             <value>
                 <stringValue
-        >CSV rows=23; objectToggle=Disable_Contract_Automation__c; hardwareToggle=Disable_Hardware_Only_Contrac_Automation__c</stringValue>
+        >CSV rows=23; objectToggle=Disable_Contract_Automation__c; hardwareToggle=Disable_Hardware_Only_Contract_Automation__c</stringValue>
             </value>
         </assignmentItems>
         <connector>
