@@ -1,0 +1,42 @@
+objects:
+  - object_api: Quote
+    csv_spec: docs/automation-spec/Salesforce RLM Billing Automation Architecture - Quote Logic and Fields.csv
+    object_disable_toggle_field: Disable_Quote_Automation__c
+    hardware_disable_toggle_field: Disable_Hardware_Only_Quote_Automation__c
+    hardware_context_field: Hardware_Quote__c
+    main_subflow_api: SUB_Quote_Main_Automation_TV
+
+  - object_api: QuoteLineItem
+    csv_spec: docs/automation-spec/Salesforce RLM Billing Automation Architecture - QuoteLIneItem Logic and Fields.csv
+    object_disable_toggle_field: Disable_QuoteLine_Automation__c
+    hardware_disable_toggle_field: Disable_Hardware_Only_QuoteLine_Auto__c
+    hardware_context_field: Hardware_Product__c
+    main_subflow_api: SUB_QuoteLineItem_Main_Automation_TV
+
+  - object_api: Order
+    csv_spec: docs/automation-spec/Salesforce RLM Billing Automation Architecture - Order Logic and Fields.csv
+    object_disable_toggle_field: Disable_Order_Automation__c
+    hardware_disable_toggle_field: Disable_Hardware_Only_Order_Automation__c
+    hardware_context_field: Hardware_Order__c
+    main_subflow_api: SUB_Order_Main_Automation_TV
+
+  - object_api: OrderItem
+    csv_spec: docs/automation-spec/Salesforce RLM Billing Automation Architecture - OrderItem Logic and Fields.csv
+    object_disable_toggle_field: Disable_OrderItem_Automation__c
+    hardware_disable_toggle_field: Disable_Hardware_Only_OrderItem_Auto__c
+    hardware_context_field: Hardware_Order__c
+    main_subflow_api: SUB_OrderItem_Main_Automation_TV
+
+  - object_api: Contract
+    csv_spec: docs/automation-spec/Salesforce RLM Billing Automation Architecture - Contract Logic and Fields.csv
+    object_disable_toggle_field: Disable_Contract_Automation__c
+    hardware_disable_toggle_field: Disable_Hardware_Only_Contrac_Automation__c
+    hardware_context_field: Hardware_Order__c
+    main_subflow_api: SUB_Contract_Main_Automation_TV
+
+  - object_api: Asset
+    csv_spec: docs/automation-spec/Salesforce RLM Billing Automation Architecture - Assets Logic and Fields.csv
+    object_disable_toggle_field: Disable_Asset_Automation__c
+    hardware_disable_toggle_field: Disable_Hardware_Only_Asset_Automation__c
+    hardware_context_field: Hardware_Order__c
+    main_subflow_api: SUB_Asset_Main_Automation_TV
