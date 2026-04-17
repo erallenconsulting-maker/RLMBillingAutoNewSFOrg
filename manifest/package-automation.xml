@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>RTF_Quote_AfterSave_TV</members>
+        <members>RTF_QuoteLineItem_AfterSave_TV</members>
         <members>SUB_Evaluate_Automation_Context_TV</members>
         <members>SUB_Log_Automation_Event_TV</members>
         <name>Flow</name>
