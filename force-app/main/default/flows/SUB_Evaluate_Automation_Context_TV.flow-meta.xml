@@ -573,7 +573,7 @@
         <locationY>0</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>Yes</name>
+            <name>HardwareContext_Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>inIsHardwareContext</leftValueReference>
