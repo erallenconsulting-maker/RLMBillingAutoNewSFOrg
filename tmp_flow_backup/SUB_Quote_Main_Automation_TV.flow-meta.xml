@@ -8,7 +8,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Record_Update</targetReference>
+            <targetReference>Log_Main_Subflow_Execution</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Update</defaultConnectorLabel>
         <rules>
@@ -27,10 +27,10 @@
             <label>Create</label>
         </rules>
     </decisions>
-    <description>Main automation subflow for Order — generated from CSV spec. Field updates mapped: 20 (18 create-only, 1 update-only, 1 always). 11 field(s) skipped (no resolvable source reference): AccountId, Pricebook2Id, ContractId, SalesTransactionTypeId, ContractName, ContractEndDate, Contracted__c, Status... Admin note: review skipped fields and child-rollup fields manually.</description>
+    <description>Main automation subflow for Quote — generated from CSV spec. Field updates mapped: 13 (13 create-only, 0 update-only, 0 always). 38 field(s) skipped (no resolvable source reference): ContactId, BillToContactId, Pricebook2Id, ContractId, Master_Contract__c, SalesTransactionTypeId, SalesRep__c, Hardware_Quote__c... Admin note: review skipped fields and child-rollup fields manually.</description>
     <environments>Default</environments>
-    <interviewLabel>SUB_Order_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>SUB Order Main Automation TV</label>
+    <interviewLabel>SUB_Quote_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SUB Quote Main Automation TV</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -51,13 +51,34 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_Account</name>
+        <label>Get Account</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Decide_Create_Or_Update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Record.AccountId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Opportunity</name>
         <label>Get Opportunity</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Record_Always</targetReference>
+            <targetReference>Get_Account</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -72,8 +93,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Quote</name>
-        <label>Get Quote</label>
+        <name>Get_Triggering_Record</name>
+        <label>Get Triggering Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -85,58 +106,13 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Triggering_Record.QuoteId</elementReference>
+                <elementReference>inRecordId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Quote</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Get_Triggering_Record</name>
-        <label>Get Triggering Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Quote</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>inRecordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Order</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Record_Always</name>
-        <label>Update Record — Always Fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Decide_Create_Or_Update</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>inRecordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Contains_Partner_Subscriptions__c</field>
-            <value>
-                <elementReference>Get_Quote.Contains_Partner_Subscriptions__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Order</object>
-    </recordUpdates>
     <recordUpdates>
         <name>Update_Record_Create</name>
         <label>Update Record — Create-Only Fields</label>
@@ -154,9 +130,39 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>BillToContactId</field>
+            <field>AccountId</field>
             <value>
-                <elementReference>Get_Quote.BillToContactId</elementReference>
+                <elementReference>Get_Opportunity.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingCity__c</field>
+            <value>
+                <elementReference>Get_Account.BillingCity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingCountry__c</field>
+            <value>
+                <elementReference>Get_Account.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingPostalCode__c</field>
+            <value>
+                <elementReference>Get_Account.BillingPostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingState__c</field>
+            <value>
+                <elementReference>Get_Account.BillingState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingStreet__c</field>
+            <value>
+                <elementReference>Get_Account.BillingStreet</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -166,30 +172,42 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>QuoteId</field>
+            <field>QuoteAccountId</field>
             <value>
-                <elementReference>Get_Quote.Id</elementReference>
+                <elementReference>Get_Opportunity.AccountId</elementReference>
             </value>
         </inputAssignments>
-        <object>Order</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Record_Update</name>
-        <label>Update Record — Update-Only Fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Log_Main_Subflow_Execution</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
+        <inputAssignments>
+            <field>ShippingCity__c</field>
             <value>
-                <elementReference>inRecordId</elementReference>
+                <elementReference>Get_Account.ShippingCity</elementReference>
             </value>
-        </filters>
-        <object>Order</object>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ShippingCountry__c</field>
+            <value>
+                <elementReference>Get_Account.ShippingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ShippingPostalCode__c</field>
+            <value>
+                <elementReference>Get_Account.ShippingPostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ShippingState__c</field>
+            <value>
+                <elementReference>Get_Account.ShippingState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ShippingStreet__c</field>
+            <value>
+                <elementReference>Get_Account.ShippingStreet</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Quote</object>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
@@ -198,7 +216,7 @@
             <targetReference>Get_Triggering_Record</targetReference>
         </connector>
     </start>
-    <status>InvalidDraft</status>
+    <status>Draft</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>
@@ -220,13 +238,13 @@
         <inputAssignments>
             <name>inFlowApiName</name>
             <value>
-                <stringValue>SUB_Order_Main_Automation_TV</stringValue>
+                <stringValue>SUB_Quote_Main_Automation_TV</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>inObjectApiName</name>
             <value>
-                <stringValue>Order</stringValue>
+                <stringValue>Quote</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -244,7 +262,7 @@
         <inputAssignments>
             <name>inMessage</name>
             <value>
-                <stringValue>Mapped 20 field(s). 18 create-only, 1 update-only, 1 always. Skipped 11 (no source).</stringValue>
+                <stringValue>Mapped 13 field(s). 13 create-only, 0 update-only, 0 always. Skipped 38 (no source).</stringValue>
             </value>
         </inputAssignments>
     </subflows>

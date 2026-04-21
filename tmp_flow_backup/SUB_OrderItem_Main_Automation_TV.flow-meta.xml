@@ -8,7 +8,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Record_Update</targetReference>
+            <targetReference>Log_Main_Subflow_Execution</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Update</defaultConnectorLabel>
         <rules>
@@ -27,10 +27,10 @@
             <label>Create</label>
         </rules>
     </decisions>
-    <description>Main automation subflow for Order — generated from CSV spec. Field updates mapped: 20 (18 create-only, 1 update-only, 1 always). 11 field(s) skipped (no resolvable source reference): AccountId, Pricebook2Id, ContractId, SalesTransactionTypeId, ContractName, ContractEndDate, Contracted__c, Status... Admin note: review skipped fields and child-rollup fields manually.</description>
+    <description>Main automation subflow for OrderItem — generated from CSV spec. Field updates mapped: 20 (19 create-only, 0 update-only, 1 always). 5 field(s) skipped (no resolvable source reference): ServiceDate, EndDate, Activated__c, Contract__c, Contracted__c Admin note: review skipped fields and child-rollup fields manually.</description>
     <environments>Default</environments>
-    <interviewLabel>SUB_Order_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>SUB Order Main Automation TV</label>
+    <interviewLabel>SUB_OrderItem_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SUB OrderItem Main Automation TV</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -51,8 +51,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Opportunity</name>
-        <label>Get Opportunity</label>
+        <name>Get_Order</name>
+        <label>Get Order</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -64,32 +64,32 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Triggering_Record.OpportunityId</elementReference>
+                <elementReference>Get_Triggering_Record.OrderId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Opportunity</object>
+        <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Get_Quote</name>
-        <label>Get Quote</label>
+        <name>Get_QuoteLineItem</name>
+        <label>Get QuoteLineItem</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Opportunity</targetReference>
+            <targetReference>Get_Order</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Triggering_Record.QuoteId</elementReference>
+                <elementReference>Get_Triggering_Record.QuoteLineItemId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Quote</object>
+        <object>QuoteLineItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -99,7 +99,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Quote</targetReference>
+            <targetReference>Get_QuoteLineItem</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -110,7 +110,7 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Order</object>
+        <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -130,12 +130,12 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Contains_Partner_Subscriptions__c</field>
+            <field>null__NotFound</field>
             <value>
-                <elementReference>Get_Quote.Contains_Partner_Subscriptions__c</elementReference>
+                <elementReference>Get_Triggering_Record.Status</elementReference>
             </value>
         </inputAssignments>
-        <object>Order</object>
+        <object>OrderItem</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Record_Create</name>
@@ -154,42 +154,120 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>BillToContactId</field>
+            <field>BillingFrequency__c</field>
             <value>
-                <elementReference>Get_Quote.BillToContactId</elementReference>
+                <elementReference>Get_QuoteLineItem.BillingFrequency__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>OpportunityId</field>
+            <field>Do_Not_Sync__c</field>
             <value>
-                <elementReference>Get_Opportunity.Id</elementReference>
+                <elementReference>Get_QuoteLineItem.null__NotFound</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>QuoteId</field>
+            <field>Hardware_Order__c</field>
             <value>
-                <elementReference>Get_Quote.Id</elementReference>
+                <elementReference>Get_QuoteLineItem.Hardware_Product__c</elementReference>
             </value>
         </inputAssignments>
-        <object>Order</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Record_Update</name>
-        <label>Update Record — Update-Only Fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Log_Main_Subflow_Execution</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
+        <inputAssignments>
+            <field>Legacy__c</field>
             <value>
-                <elementReference>inRecordId</elementReference>
+                <elementReference>Get_QuoteLineItem.Legacy__c</elementReference>
             </value>
-        </filters>
-        <object>Order</object>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quantity</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Quantity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Recipient_City__c</field>
+            <value>
+                <elementReference>Get_Order.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Recipient_Country__c</field>
+            <value>
+                <elementReference>Get_Order.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Recipient_Name__c</field>
+            <value>
+                <elementReference>Get_Order.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Recipient_State__c</field>
+            <value>
+                <elementReference>Get_Order.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Recipient_Street__c</field>
+            <value>
+                <elementReference>Get_Order.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Recipient_Zip_Code__c</field>
+            <value>
+                <elementReference>Get_Order.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SubscriptionTerm</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Partner_Subscription__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Charge_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Billing_Schedule__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Detailed_Line_Description__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Quantity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Billing_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>OrderItem</object>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
@@ -220,13 +298,13 @@
         <inputAssignments>
             <name>inFlowApiName</name>
             <value>
-                <stringValue>SUB_Order_Main_Automation_TV</stringValue>
+                <stringValue>SUB_OrderItem_Main_Automation_TV</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>inObjectApiName</name>
             <value>
-                <stringValue>Order</stringValue>
+                <stringValue>OrderItem</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -244,7 +322,7 @@
         <inputAssignments>
             <name>inMessage</name>
             <value>
-                <stringValue>Mapped 20 field(s). 18 create-only, 1 update-only, 1 always. Skipped 11 (no source).</stringValue>
+                <stringValue>Mapped 20 field(s). 19 create-only, 0 update-only, 1 always. Skipped 5 (no source).</stringValue>
             </value>
         </inputAssignments>
     </subflows>

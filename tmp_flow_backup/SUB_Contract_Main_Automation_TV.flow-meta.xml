@@ -8,7 +8,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Record_Update</targetReference>
+            <targetReference>Log_Main_Subflow_Execution</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Update</defaultConnectorLabel>
         <rules>
@@ -27,10 +27,10 @@
             <label>Create</label>
         </rules>
     </decisions>
-    <description>Main automation subflow for Order — generated from CSV spec. Field updates mapped: 20 (18 create-only, 1 update-only, 1 always). 11 field(s) skipped (no resolvable source reference): AccountId, Pricebook2Id, ContractId, SalesTransactionTypeId, ContractName, ContractEndDate, Contracted__c, Status... Admin note: review skipped fields and child-rollup fields manually.</description>
+    <description>Main automation subflow for Contract — generated from CSV spec. Field updates mapped: 19 (19 create-only, 0 update-only, 0 always). 4 field(s) skipped (no resolvable source reference): Contract_Has_Legacy_Product__c, Master_Contract__c, No_Auto_Renew__c, Original_Contract_ARR__c Admin note: review skipped fields and child-rollup fields manually.</description>
     <environments>Default</environments>
-    <interviewLabel>SUB_Order_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>SUB Order Main Automation TV</label>
+    <interviewLabel>SUB_Contract_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SUB Contract Main Automation TV</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -51,24 +51,24 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Opportunity</name>
-        <label>Get Opportunity</label>
+        <name>Get_Order</name>
+        <label>Get Order</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Record_Always</targetReference>
+            <targetReference>Get_Quote</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Triggering_Record.OpportunityId</elementReference>
+                <elementReference>Get_Triggering_Record.Order__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Opportunity</object>
+        <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -78,14 +78,14 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Opportunity</targetReference>
+            <targetReference>Decide_Create_Or_Update</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Triggering_Record.QuoteId</elementReference>
+                <elementReference>Get_Triggering_Record.Quote__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -99,7 +99,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Quote</targetReference>
+            <targetReference>Get_Order</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -110,33 +110,9 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Order</object>
+        <object>Contract</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordUpdates>
-        <name>Update_Record_Always</name>
-        <label>Update Record — Always Fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Decide_Create_Or_Update</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>inRecordId</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Contains_Partner_Subscriptions__c</field>
-            <value>
-                <elementReference>Get_Quote.Contains_Partner_Subscriptions__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Order</object>
-    </recordUpdates>
     <recordUpdates>
         <name>Update_Record_Create</name>
         <label>Update Record — Create-Only Fields</label>
@@ -154,42 +130,120 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>BillToContactId</field>
+            <field>ARR__c</field>
+            <value>
+                <elementReference>Get_Quote.Total_ARR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>Get_Order.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Auto_Renewal_Highlight__c</field>
+            <value>
+                <elementReference>Get_Quote.DoesAutomaticallyRenew__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingAddress</field>
+            <value>
+                <elementReference>Get_Quote.BillingAddress</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Contact__c</field>
             <value>
                 <elementReference>Get_Quote.BillToContactId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>OpportunityId</field>
+            <field>Billing_Frequency__c</field>
             <value>
-                <elementReference>Get_Opportunity.Id</elementReference>
+                <elementReference>Get_Quote.null__NotFound</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>QuoteId</field>
+            <field>Do_Not_Sync__c</field>
             <value>
-                <elementReference>Get_Quote.Id</elementReference>
+                <elementReference>Get_Quote.null__NotFound</elementReference>
             </value>
         </inputAssignments>
-        <object>Order</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Record_Update</name>
-        <label>Update Record — Update-Only Fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Log_Main_Subflow_Execution</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
+        <inputAssignments>
+            <field>EndDate</field>
             <value>
-                <elementReference>inRecordId</elementReference>
+                <elementReference>Get_Quote.null__NotFound</elementReference>
             </value>
-        </filters>
-        <object>Order</object>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Legacy__c</field>
+            <value>
+                <elementReference>Get_Quote.Legacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Opportunity__c</field>
+            <value>
+                <elementReference>Get_Order.OpportunityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Order__c</field>
+            <value>
+                <elementReference>Get_Order.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payment_Method__c</field>
+            <value>
+                <elementReference>Get_Quote.Payment_Method__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Payment_Terms__c</field>
+            <value>
+                <elementReference>Get_Quote.Payment_Terms__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Pricebook2Id</field>
+            <value>
+                <elementReference>Get_Quote.Pricebook2Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Quote__c</field>
+            <value>
+                <elementReference>Get_Order.QuoteId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ShippingAddress</field>
+            <value>
+                <elementReference>Get_Quote.ShippingAddress</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.StartDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.Hardware_Order__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.Contains_Partner_Subscriptions__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contract</object>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
@@ -220,13 +274,13 @@
         <inputAssignments>
             <name>inFlowApiName</name>
             <value>
-                <stringValue>SUB_Order_Main_Automation_TV</stringValue>
+                <stringValue>SUB_Contract_Main_Automation_TV</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>inObjectApiName</name>
             <value>
-                <stringValue>Order</stringValue>
+                <stringValue>Contract</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -244,7 +298,7 @@
         <inputAssignments>
             <name>inMessage</name>
             <value>
-                <stringValue>Mapped 20 field(s). 18 create-only, 1 update-only, 1 always. Skipped 11 (no source).</stringValue>
+                <stringValue>Mapped 19 field(s). 19 create-only, 0 update-only, 0 always. Skipped 4 (no source).</stringValue>
             </value>
         </inputAssignments>
     </subflows>

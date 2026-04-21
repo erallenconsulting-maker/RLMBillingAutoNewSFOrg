@@ -1,6 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Set_Correlation_Id</name>
+        <label>Set Correlation Id</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>outCorrelationId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GeneratedCorrelationId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Automation_Toggles</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Set_Default_Run_Outputs</name>
         <label>Set Default Run Outputs</label>
@@ -17,7 +34,7 @@
             <assignToReference>outStopReason</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue />
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -25,20 +42,64 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Correlation_Id</name>
-        <label>Set Correlation Id</label>
+        <name>Stop_Account_Disabled</name>
+        <label>Stop Account Disabled</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
-            <assignToReference>outCorrelationId</assignToReference>
+            <assignToReference>outShouldRun</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GeneratedCorrelationId</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
-        <connector>
-            <targetReference>Get_Automation_Toggles</targetReference>
-        </connector>
+        <assignmentItems>
+            <assignToReference>outStopReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disable_Account_Automation__c</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Stop_Asset_Disabled</name>
+        <label>Stop Asset Disabled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>outShouldRun</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outStopReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disable_Asset_Automation__c</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Stop_Contract_Disabled</name>
+        <label>Stop Contract Disabled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>outShouldRun</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outStopReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disable_Contract_Automation__c</stringValue>
+            </value>
+        </assignmentItems>
     </assignments>
     <assignments>
         <name>Stop_Global_Disabled</name>
@@ -61,8 +122,8 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Stop_Quote_Disabled</name>
-        <label>Stop Quote Disabled</label>
+        <name>Stop_Hardware_Asset_Disabled</name>
+        <label>Stop Hardware Asset Disabled</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -76,13 +137,13 @@
             <assignToReference>outStopReason</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Disable_Quote_Automation__c</stringValue>
+                <stringValue>Disable_Hardware_Only_Asset_Automation__c</stringValue>
             </value>
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Stop_QuoteLine_Disabled</name>
-        <label>Stop QuoteLine Disabled</label>
+        <name>Stop_Hardware_Contract_Disabled</name>
+        <label>Stop Hardware Contract Disabled</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -96,7 +157,107 @@
             <assignToReference>outStopReason</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Disable_QuoteLine_Automation__c</stringValue>
+                <stringValue>Disable_Hardware_Only_Contrac_Automation__c</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Stop_Hardware_Order_Disabled</name>
+        <label>Stop Hardware Order Disabled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>outShouldRun</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outStopReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disable_Hardware_Only_Order_Automation__c</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Stop_Hardware_OrderItem_Disabled</name>
+        <label>Stop Hardware OrderItem Disabled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>outShouldRun</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outStopReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disable_Hardware_Only_OrderItem_Auto__c</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Stop_Hardware_Quote_Disabled</name>
+        <label>Stop Hardware Quote Disabled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>outShouldRun</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outStopReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disable_Hardware_Only_Quote_Automation__c</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Stop_Hardware_QuoteLine_Disabled</name>
+        <label>Stop Hardware QuoteLine Disabled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>outShouldRun</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outStopReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disable_Hardware_Only_QuoteLine_Auto__c</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Stop_Opportunity_Disabled</name>
+        <label>Stop Opportunity Disabled</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>outShouldRun</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>outStopReason</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disable_Opportunity_Automation__c</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -141,8 +302,8 @@
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Stop_Contract_Disabled</name>
-        <label>Stop Contract Disabled</label>
+        <name>Stop_Quote_Disabled</name>
+        <label>Stop Quote Disabled</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -156,13 +317,13 @@
             <assignToReference>outStopReason</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Disable_Contract_Automation__c</stringValue>
+                <stringValue>Disable_Quote_Automation__c</stringValue>
             </value>
         </assignmentItems>
     </assignments>
     <assignments>
-        <name>Stop_Asset_Disabled</name>
-        <label>Stop Asset Disabled</label>
+        <name>Stop_QuoteLine_Disabled</name>
+        <label>Stop QuoteLine Disabled</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
@@ -176,176 +337,149 @@
             <assignToReference>outStopReason</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Disable_Asset_Automation__c</stringValue>
+                <stringValue>Disable_QuoteLine_Automation__c</stringValue>
             </value>
         </assignmentItems>
     </assignments>
-    <assignments>
-        <name>Stop_Account_Disabled</name>
-        <label>Stop Account Disabled</label>
+    <decisions>
+        <name>Hardware_Only_Automation_Disabled</name>
+        <label>Hardware Only Automation Disabled</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outShouldRun</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>outStopReason</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Disable_Account_Automation__c</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Stop_Opportunity_Disabled</name>
-        <label>Stop Opportunity Disabled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outShouldRun</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>outStopReason</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Disable_Opportunity_Automation__c</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Stop_Hardware_Quote_Disabled</name>
-        <label>Stop Hardware Quote Disabled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outShouldRun</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>outStopReason</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue
-        >Disable_Hardware_Only_Quote_Automation__c</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Stop_Hardware_QuoteLine_Disabled</name>
-        <label>Stop Hardware QuoteLine Disabled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outShouldRun</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>outStopReason</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue
-        >Disable_Hardware_Only_QuoteLine_Auto__c</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Stop_Hardware_Order_Disabled</name>
-        <label>Stop Hardware Order Disabled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outShouldRun</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>outStopReason</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue
-        >Disable_Hardware_Only_Order_Automation__c</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Stop_Hardware_OrderItem_Disabled</name>
-        <label>Stop Hardware OrderItem Disabled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outShouldRun</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>outStopReason</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue
-        >Disable_Hardware_Only_OrderItem_Auto__c</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Stop_Hardware_Contract_Disabled</name>
-        <label>Stop Hardware Contract Disabled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outShouldRun</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>outStopReason</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue
-        >Disable_Hardware_Only_Contrac_Automation__c</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>Stop_Hardware_Asset_Disabled</name>
-        <label>Stop Hardware Asset Disabled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>outShouldRun</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>outStopReason</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue
-        >Disable_Hardware_Only_Asset_Automation__c</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Hardware_Quote_Disabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inObjectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Quote</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Automation_Toggles.Disable_Hardware_Only_Quote_Automation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stop_Hardware_Quote_Disabled</targetReference>
+            </connector>
+            <label>Hardware Quote Disabled</label>
+        </rules>
+        <rules>
+            <name>Hardware_QuoteLineItem_Disabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inObjectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>QuoteLineItem</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Automation_Toggles.Disable_Hardware_Only_QuoteLine_Auto__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stop_Hardware_QuoteLine_Disabled</targetReference>
+            </connector>
+            <label>Hardware QuoteLineItem Disabled</label>
+        </rules>
+        <rules>
+            <name>Hardware_Order_Disabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inObjectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Order</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Automation_Toggles.Disable_Hardware_Only_Order_Automation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stop_Hardware_Order_Disabled</targetReference>
+            </connector>
+            <label>Hardware Order Disabled</label>
+        </rules>
+        <rules>
+            <name>Hardware_OrderItem_Disabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inObjectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>OrderItem</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Automation_Toggles.Disable_Hardware_Only_OrderItem_Auto__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stop_Hardware_OrderItem_Disabled</targetReference>
+            </connector>
+            <label>Hardware OrderItem Disabled</label>
+        </rules>
+        <rules>
+            <name>Hardware_Contract_Disabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inObjectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contract</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Automation_Toggles.Disable_Hardware_Only_Contrac_Automation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stop_Hardware_Contract_Disabled</targetReference>
+            </connector>
+            <label>Hardware Contract Disabled</label>
+        </rules>
+        <rules>
+            <name>Hardware_Asset_Disabled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inObjectApiName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Asset</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Automation_Toggles.Disable_Hardware_Only_Asset_Automation__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Stop_Hardware_Asset_Disabled</targetReference>
+            </connector>
+            <label>Hardware Asset Disabled</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Is_Global_Automation_Disabled</name>
         <label>Is Global Automation Disabled</label>
@@ -359,8 +493,7 @@
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_RLM_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_RLM_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -368,6 +501,28 @@
             </conditions>
             <connector>
                 <targetReference>Stop_Global_Disabled</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Hardware_Context</name>
+        <label>Is Hardware Context</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>HardwareContext_Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inIsHardwareContext</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Hardware_Only_Automation_Disabled</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -392,8 +547,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Quote_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_Quote_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -415,8 +569,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_QuoteLine_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_QuoteLine_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -438,8 +591,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Order_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_Order_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -461,8 +613,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_OrderItem_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_OrderItem_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -484,8 +635,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Contract_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_Contract_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -507,8 +657,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Asset_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_Asset_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -530,8 +679,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Account_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_Account_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -553,8 +701,7 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Opportunity_Automation__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Disable_Opportunity_Automation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -566,188 +713,14 @@
             <label>Opportunity Disabled</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Is_Hardware_Context</name>
-        <label>Is Hardware Context</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>HardwareContext_Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inIsHardwareContext</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference
-        >Hardware_Only_Automation_Disabled</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Hardware_Only_Automation_Disabled</name>
-        <label>Hardware Only Automation Disabled</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Hardware_Quote_Disabled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inObjectApiName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Quote</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Hardware_Only_Quote_Automation__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Stop_Hardware_Quote_Disabled</targetReference>
-            </connector>
-            <label>Hardware Quote Disabled</label>
-        </rules>
-        <rules>
-            <name>Hardware_QuoteLineItem_Disabled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inObjectApiName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>QuoteLineItem</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Hardware_Only_QuoteLine_Auto__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference
-        >Stop_Hardware_QuoteLine_Disabled</targetReference>
-            </connector>
-            <label>Hardware QuoteLineItem Disabled</label>
-        </rules>
-        <rules>
-            <name>Hardware_Order_Disabled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inObjectApiName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Order</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Hardware_Only_Order_Automation__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Stop_Hardware_Order_Disabled</targetReference>
-            </connector>
-            <label>Hardware Order Disabled</label>
-        </rules>
-        <rules>
-            <name>Hardware_OrderItem_Disabled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inObjectApiName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>OrderItem</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Hardware_Only_OrderItem_Auto__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference
-        >Stop_Hardware_OrderItem_Disabled</targetReference>
-            </connector>
-            <label>Hardware OrderItem Disabled</label>
-        </rules>
-        <rules>
-            <name>Hardware_Contract_Disabled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inObjectApiName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Contract</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Hardware_Only_Contrac_Automation__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference
-        >Stop_Hardware_Contract_Disabled</targetReference>
-            </connector>
-            <label>Hardware Contract Disabled</label>
-        </rules>
-        <rules>
-            <name>Hardware_Asset_Disabled</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inObjectApiName</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Asset</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Disable_Hardware_Only_Asset_Automation__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Stop_Hardware_Asset_Disabled</targetReference>
-            </connector>
-            <label>Hardware Asset Disabled</label>
-        </rules>
-    </decisions>
-    <description
-  >Admin-first helper subflow that evaluates automation context toggles and returns shouldRun, stopReason, and correlationId outputs.</description>
+    <description>Admin-first helper subflow that evaluates automation context toggles and returns shouldRun, stopReason, and correlationId outputs.</description>
     <environments>Default</environments>
     <formulas>
         <name>GeneratedCorrelationId</name>
         <dataType>String</dataType>
-        <expression
-    >IF(NOT(ISBLANK({!$Flow.InterviewGuid})), {!$Flow.InterviewGuid}, TEXT({!$Flow.CurrentDateTime}) &amp; &quot;-&quot; &amp; {!inRecordIdForLog})</expression>
+        <expression>IF(NOT(ISBLANK({!$Flow.InterviewGuid})), {!$Flow.InterviewGuid}, TEXT({!$Flow.CurrentDateTime}) &amp; &quot;-&quot; &amp; {!inRecordIdForLog})</expression>
     </formulas>
-    <interviewLabel
-  >SUB Evaluate Automation Context TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>SUB Evaluate Automation Context TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB Evaluate Automation Context TV</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -773,8 +746,7 @@
         <label>Get Automation Toggles</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound
-    >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Global_Automation_Disabled</targetReference>
         </connector>

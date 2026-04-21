@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Is_Debug_Logging_Enabled</name>
         <label>Is Debug Logging Enabled</label>
@@ -11,8 +12,7 @@
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Enable_Debug_Logging__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Enable_Debug_Logging__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -34,8 +34,7 @@
             <name>Verbose_Allows_All</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Debug_Log_Level__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Debug_Log_Level__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>VERBOSE</stringValue>
@@ -50,8 +49,7 @@
             <name>Info_Allows_Info</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Debug_Log_Level__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Debug_Log_Level__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>INFO</stringValue>
@@ -73,8 +71,7 @@
             <name>Info_Allows_Error</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Debug_Log_Level__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Debug_Log_Level__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>INFO</stringValue>
@@ -96,8 +93,7 @@
             <name>Error_Allows_Error</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference
-        >Get_Automation_Toggles.Debug_Log_Level__c</leftValueReference>
+                <leftValueReference>Get_Automation_Toggles.Debug_Log_Level__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>ERROR</stringValue>
@@ -116,11 +112,9 @@
             <label>Error Allows Error</label>
         </rules>
     </decisions>
-    <description
-  >Admin-first helper subflow that writes Automation_Log__c diagnostics when debug logging and log-level gates allow it.</description>
+    <description>Admin-first helper subflow that writes Automation_Log__c diagnostics when debug logging and log-level gates allow it.</description>
     <environments>Default</environments>
-    <interviewLabel
-  >SUB Log Automation Event TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>SUB Log Automation Event TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB Log Automation Event TV</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -147,9 +141,27 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <inputAssignments>
+            <field>Action__c</field>
+            <value>
+                <elementReference>inAction</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Correlation_Id__c</field>
+            <value>
+                <elementReference>inCorrelationId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Flow_API_Name__c</field>
             <value>
                 <elementReference>inFlowApiName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message__c</field>
+            <value>
+                <elementReference>inMessage</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -164,24 +176,6 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>Action__c</field>
-            <value>
-                <elementReference>inAction</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Message__c</field>
-            <value>
-                <elementReference>inMessage</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Correlation_Id__c</field>
-            <value>
-                <elementReference>inCorrelationId</elementReference>
-            </value>
-        </inputAssignments>
         <object>Automation_Log__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
@@ -190,8 +184,7 @@
         <label>Get Automation Toggles</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound
-    >false</assignNullValuesIfNoRecordsFound>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Debug_Logging_Enabled</targetReference>
         </connector>

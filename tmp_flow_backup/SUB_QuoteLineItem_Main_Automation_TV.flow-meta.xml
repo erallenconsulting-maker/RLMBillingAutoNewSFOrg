@@ -8,7 +8,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Update_Record_Update</targetReference>
+            <targetReference>Log_Main_Subflow_Execution</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Update</defaultConnectorLabel>
         <rules>
@@ -27,10 +27,10 @@
             <label>Create</label>
         </rules>
     </decisions>
-    <description>Main automation subflow for Order — generated from CSV spec. Field updates mapped: 20 (18 create-only, 1 update-only, 1 always). 11 field(s) skipped (no resolvable source reference): AccountId, Pricebook2Id, ContractId, SalesTransactionTypeId, ContractName, ContractEndDate, Contracted__c, Status... Admin note: review skipped fields and child-rollup fields manually.</description>
+    <description>Main automation subflow for QuoteLineItem — generated from CSV spec. Field updates mapped: 9 (6 create-only, 0 update-only, 3 always). 16 field(s) skipped (no resolvable source reference): Pricebook2Id, Revenue_Calculation_Status__c, Legacy__c, ARR__c, MRR__c, Delta_ARR__c, One_Time_Amount__c, Recurring_Amount__c... Admin note: review skipped fields and child-rollup fields manually.</description>
     <environments>Default</environments>
-    <interviewLabel>SUB_Order_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>SUB Order Main Automation TV</label>
+    <interviewLabel>SUB_QuoteLineItem_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SUB QuoteLineItem Main Automation TV</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -51,8 +51,8 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Opportunity</name>
-        <label>Get Opportunity</label>
+        <name>Get_Product2</name>
+        <label>Get Product2</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
@@ -64,32 +64,11 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Triggering_Record.OpportunityId</elementReference>
+                <elementReference>Get_Triggering_Record.Product2Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Opportunity</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Quote</name>
-        <label>Get Quote</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Opportunity</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Triggering_Record.QuoteId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Quote</object>
+        <object>Product2</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -99,7 +78,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Quote</targetReference>
+            <targetReference>Get_Product2</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -110,7 +89,7 @@
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Order</object>
+        <object>QuoteLineItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
@@ -130,12 +109,24 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Contains_Partner_Subscriptions__c</field>
+            <field>BillingFrequency__c</field>
             <value>
-                <elementReference>Get_Quote.Contains_Partner_Subscriptions__c</elementReference>
+                <elementReference>Get_Product2.Default_Billing_Frequency__c</elementReference>
             </value>
         </inputAssignments>
-        <object>Order</object>
+        <inputAssignments>
+            <field>Charge_Type__c</field>
+            <value>
+                <elementReference>Get_Product2.Default_Charge_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Product2.Default_Subscription_Term__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>QuoteLineItem</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Record_Create</name>
@@ -154,42 +145,42 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>BillToContactId</field>
+            <field>Detailed_Line_Description__c</field>
             <value>
-                <elementReference>Get_Quote.BillToContactId</elementReference>
+                <elementReference>Get_Product2.Description</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>OpportunityId</field>
+            <field>Hardware_Product__c</field>
             <value>
-                <elementReference>Get_Opportunity.Id</elementReference>
+                <elementReference>Get_Product2.Hardware_Product__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>QuoteId</field>
+            <field>Partner_Subscription__c</field>
             <value>
-                <elementReference>Get_Quote.Id</elementReference>
+                <elementReference>Get_Product2.Partner_Subscription__c</elementReference>
             </value>
         </inputAssignments>
-        <object>Order</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Update_Record_Update</name>
-        <label>Update Record — Update-Only Fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Log_Main_Subflow_Execution</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
+        <inputAssignments>
+            <field>Product2Id</field>
             <value>
-                <elementReference>inRecordId</elementReference>
+                <elementReference>Get_Product2.Id</elementReference>
             </value>
-        </filters>
-        <object>Order</object>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Type__c</field>
+            <value>
+                <elementReference>Get_Product2.Techvera_Product_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Product2.DoesAutomaticallyRenew__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>QuoteLineItem</object>
     </recordUpdates>
     <start>
         <locationX>0</locationX>
@@ -220,13 +211,13 @@
         <inputAssignments>
             <name>inFlowApiName</name>
             <value>
-                <stringValue>SUB_Order_Main_Automation_TV</stringValue>
+                <stringValue>SUB_QuoteLineItem_Main_Automation_TV</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>inObjectApiName</name>
             <value>
-                <stringValue>Order</stringValue>
+                <stringValue>QuoteLineItem</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -244,7 +235,7 @@
         <inputAssignments>
             <name>inMessage</name>
             <value>
-                <stringValue>Mapped 20 field(s). 18 create-only, 1 update-only, 1 always. Skipped 11 (no source).</stringValue>
+                <stringValue>Mapped 9 field(s). 6 create-only, 0 update-only, 3 always. Skipped 16 (no source).</stringValue>
             </value>
         </inputAssignments>
     </subflows>

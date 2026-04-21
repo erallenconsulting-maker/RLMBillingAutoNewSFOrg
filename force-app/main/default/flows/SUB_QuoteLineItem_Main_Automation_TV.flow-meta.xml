@@ -1,106 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
-    <environments>Default</environments>
-    <processMetadataValues>
-        <name>BuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>CanvasMode</name>
-        <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>OriginBuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
-    <processType>AutoLaunchedFlow</processType>
-    <description>Main automation subflow for QuoteLineItem — generated from CSV spec. Field updates mapped: 9 (6 create-only, 0 update-only, 3 always). 16 field(s) skipped (no resolvable source reference): Pricebook2Id, Revenue_Calculation_Status__c, Legacy__c, ARR__c, MRR__c, Delta_ARR__c, One_Time_Amount__c, Recurring_Amount__c... Admin note: review skipped fields and child-rollup fields manually.</description>
-    <interviewLabel>SUB_QuoteLineItem_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>SUB QuoteLineItem Main Automation TV</label>
-    <recordLookups>
-        <name>Get_Triggering_Record</name>
-        <label>Get Triggering Record</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Product2</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>inRecordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>QuoteLineItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Product2</name>
-        <label>Get Product2</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Update_Record_Always</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Triggering_Record.Product2Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Product2</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>Update_Record_Always</name>
-        <label>Update Record — Always Fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Decide_Create_Or_Update</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>BillingFrequency__c</field>
-            <value>
-                <elementReference>Get_Product2.Default_Billing_Frequency__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Subscription_Term__c</field>
-            <value>
-                <elementReference>Get_Product2.Default_Subscription_Term__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Charge_Type__c</field>
-            <value>
-                <elementReference>Get_Product2.Default_Charge_Type__c</elementReference>
-            </value>
-        </inputAssignments>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>inRecordId</elementReference>
-            </value>
-        </filters>
-        <object>QuoteLineItem</object>
-    </recordUpdates>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Decide_Create_Or_Update</name>
         <label>Create or Update?</label>
@@ -126,6 +27,101 @@
             <label>Create</label>
         </rules>
     </decisions>
+    <description>Main automation subflow for QuoteLineItem — generated from CSV spec. Field updates mapped: 9 (6 create-only, 0 update-only, 3 always). 16 field(s) skipped (no resolvable source reference): Pricebook2Id, Revenue_Calculation_Status__c, Legacy__c, ARR__c, MRR__c, Delta_ARR__c, One_Time_Amount__c, Recurring_Amount__c... Admin note: review skipped fields and child-rollup fields manually.</description>
+    <environments>Default</environments>
+    <interviewLabel>SUB_QuoteLineItem_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SUB QuoteLineItem Main Automation TV</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Product2</name>
+        <label>Get Product2</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Update_Record_Always</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Triggering_Record.Product2Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Product2</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Triggering_Record</name>
+        <label>Get Triggering Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Product2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>QuoteLineItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Record_Always</name>
+        <label>Update Record — Always Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Decide_Create_Or_Update</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>BillingFrequency__c</field>
+            <value>
+                <elementReference>Get_Product2.Default_Billing_Frequency__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Charge_Type__c</field>
+            <value>
+                <elementReference>Get_Product2.Default_Charge_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>QuoteLineItem</object>
+    </recordUpdates>
     <recordUpdates>
         <name>Update_Record_Create</name>
         <label>Update Record — Create-Only Fields</label>
@@ -134,10 +130,18 @@
         <connector>
             <targetReference>Log_Main_Subflow_Execution</targetReference>
         </connector>
-        <inputAssignments>
-            <field>Product2</field>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Product2.Id</elementReference>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Detailed_Line_Description__c</field>
+            <value>
+                <elementReference>Get_Product2.Description</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -147,21 +151,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>DoesAutomaticallyRenew__c</field>
-            <value>
-                <elementReference>Get_Product2.DoesAutomaticallyRenew__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Partner_Subscription__c</field>
             <value>
                 <elementReference>Get_Product2.Partner_Subscription__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Detailed_Line_Description__c</field>
+            <field>Product2Id</field>
             <value>
-                <elementReference>Get_Product2.Description</elementReference>
+                <elementReference>Get_Product2.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -170,15 +168,16 @@
                 <elementReference>Get_Product2.Techvera_Product_Type__c</elementReference>
             </value>
         </inputAssignments>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>inRecordId</elementReference>
-            </value>
-        </filters>
         <object>QuoteLineItem</object>
     </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Triggering_Record</targetReference>
+        </connector>
+    </start>
+    <status>InvalidDraft</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>
@@ -228,14 +227,6 @@
             </value>
         </inputAssignments>
     </subflows>
-    <start>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Triggering_Record</targetReference>
-        </connector>
-    </start>
-    <status>Draft</status>
     <variables>
         <name>inCorrelationId</name>
         <dataType>String</dataType>

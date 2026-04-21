@@ -27,15 +27,15 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <description>Router flow for OrderItem. Calls SUB_Evaluate_Automation_Context_TV then SUB_OrderItem_Main_Automation_TV when context allows. Passes inIsNewRecord so the main subflow can gate create-only vs update-only field assignments.</description>
+    <description>Router flow for Quote. Calls SUB_Evaluate_Automation_Context_TV then SUB_Quote_Main_Automation_TV when context allows. Passes inIsNewRecord so the main subflow can gate create-only vs update-only field assignments.</description>
     <environments>Default</environments>
     <formulas>
         <name>frmIsNewRecord</name>
         <dataType>Boolean</dataType>
         <expression>ISBLANK({!$Record__Prior.Id})</expression>
     </formulas>
-    <interviewLabel>RTF_OrderItem_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>RTF OrderItem AfterSave TV</label>
+    <interviewLabel>RTF_Quote_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTF Quote AfterSave TV</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -69,7 +69,7 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
-        <object>OrderItem</object>
+        <object>Quote</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
@@ -82,7 +82,7 @@
         <connector>
             <targetReference>Log_Main_Invoked</targetReference>
         </connector>
-        <flowName>SUB_OrderItem_Main_Automation_TV</flowName>
+        <flowName>SUB_Quote_Main_Automation_TV</flowName>
         <inputAssignments>
             <name>inRecordId</name>
             <value>
@@ -114,13 +114,7 @@
         <inputAssignments>
             <name>inObjectApiName</name>
             <value>
-                <stringValue>OrderItem</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>inIsHardwareContext</name>
-            <value>
-                <elementReference>$Record.Hardware_Order__c</elementReference>
+                <stringValue>Quote</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -163,13 +157,13 @@
         <inputAssignments>
             <name>inFlowApiName</name>
             <value>
-                <stringValue>RTF_OrderItem_AfterSave_TV</stringValue>
+                <stringValue>RTF_Quote_AfterSave_TV</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>inObjectApiName</name>
             <value>
-                <stringValue>OrderItem</stringValue>
+                <stringValue>Quote</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -187,7 +181,7 @@
         <inputAssignments>
             <name>inMessage</name>
             <value>
-                <stringValue>Main automation subflow SUB_OrderItem_Main_Automation_TV invoked.</stringValue>
+                <stringValue>Main automation subflow SUB_Quote_Main_Automation_TV invoked.</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -212,13 +206,13 @@
         <inputAssignments>
             <name>inFlowApiName</name>
             <value>
-                <stringValue>RTF_OrderItem_AfterSave_TV</stringValue>
+                <stringValue>RTF_Quote_AfterSave_TV</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>inObjectApiName</name>
             <value>
-                <stringValue>OrderItem</stringValue>
+                <stringValue>Quote</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

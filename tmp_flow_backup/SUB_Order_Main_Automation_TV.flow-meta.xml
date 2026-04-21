@@ -160,6 +160,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>EndDate</field>
+            <value>
+                <elementReference>Get_Quote.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>OpportunityId</field>
             <value>
                 <elementReference>Get_Opportunity.Id</elementReference>
@@ -169,6 +175,90 @@
             <field>QuoteId</field>
             <value>
                 <elementReference>Get_Quote.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.ShippingName</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.BillingStreet</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.BillingCity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.BillingState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.BillingPostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.ShippingStreet</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.ShippingCity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.ShippingState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.ShippingPostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.ShippingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.DoesAutomaticallyRenew__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.StartDate</elementReference>
             </value>
         </inputAssignments>
         <object>Order</object>
@@ -189,6 +279,12 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Hardware_Order__c</field>
+            <value>
+                <elementReference>Get_Quote.null__NotFound</elementReference>
+            </value>
+        </inputAssignments>
         <object>Order</object>
     </recordUpdates>
     <start>

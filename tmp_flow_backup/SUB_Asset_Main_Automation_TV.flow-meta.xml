@@ -64,7 +64,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_QuoteLineItem.QuoteId</elementReference>
+                <elementReference>Get_Triggering_Record.null__NotFound</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -85,7 +85,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Triggering_Record.QuoteLineItemId</elementReference>
+                <elementReference>Get_Triggering_Record.null__NotFound</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -142,6 +142,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>Get_Quote.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Billing_Frequency__c</field>
             <value>
                 <elementReference>Get_QuoteLineItem.BillingFrequency__c</elementReference>
@@ -160,7 +166,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Detailed_Line_Description__c</field>
+            <field>Description</field>
             <value>
                 <elementReference>Get_QuoteLineItem.Detailed_Line_Description__c</elementReference>
             </value>
@@ -187,6 +193,162 @@
             <field>Quantity</field>
             <value>
                 <elementReference>Get_QuoteLineItem.Quantity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Hardware_Product__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Legacy__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Quote.ContractId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.StartDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.EndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Billing_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.SubscriptionTerm</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Billing_Schedule__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.QuoteId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.MRR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Delta_ARR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Renewal_Amount_ARR__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Renewal_Date__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Recurring_Amount__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Revenue_Calculation_Status__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.One_Time_Amount__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Product_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.NetUnitPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.NetTotalPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.UnitPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.UnitPriceUplift</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_QuoteLineItem.Quantity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>null__NotFound</field>
+            <value>
+                <elementReference>Get_Triggering_Record.null__NotFound</elementReference>
             </value>
         </inputAssignments>
         <object>Asset</object>

@@ -1,29 +1,7 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
-    <environments>Default</environments>
-    <processMetadataValues>
-        <name>BuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>CanvasMode</name>
-        <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>OriginBuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
-    <processType>AutoLaunchedFlow</processType>
-    <description>Router flow for QuoteLineItem. Calls SUB_Evaluate_Automation_Context_TV then SUB_QuoteLineItem_Main_Automation_TV when context allows. Passes inIsNewRecord so the main subflow can gate create-only vs update-only field assignments.</description>
-    <interviewLabel>RTF_QuoteLineItem_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>RTF QuoteLineItem AfterSave TV</label>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <decisions>
         <name>Should_Run_Context</name>
         <label>Should Run Context</label>
@@ -49,11 +27,81 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <description>Router flow for QuoteLineItem. Calls SUB_Evaluate_Automation_Context_TV then SUB_QuoteLineItem_Main_Automation_TV when context allows. Passes inIsNewRecord so the main subflow can gate create-only vs update-only field assignments.</description>
+    <environments>Default</environments>
     <formulas>
         <name>frmIsNewRecord</name>
         <dataType>Boolean</dataType>
         <expression>ISBLANK({!$Record__Prior.Id})</expression>
     </formulas>
+    <interviewLabel>RTF_QuoteLineItem_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTF QuoteLineItem AfterSave TV</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Eval_Context</targetReference>
+        </connector>
+        <filterLogic>1</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>QuoteLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+    <subflows>
+        <name>Call_Main_Automation</name>
+        <label>Call Main Automation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Log_Main_Invoked</targetReference>
+        </connector>
+        <flowName>SUB_QuoteLineItem_Main_Automation_TV</flowName>
+        <inputAssignments>
+            <name>inRecordId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inCorrelationId</name>
+            <value>
+                <elementReference>varCorrelationId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inIsNewRecord</name>
+            <value>
+                <elementReference>frmIsNewRecord</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Eval_Context</name>
         <label>Evaluate Automation Context</label>
@@ -93,34 +141,6 @@
             <assignToReference>varCorrelationId</assignToReference>
             <name>outCorrelationId</name>
         </outputAssignments>
-    </subflows>
-    <subflows>
-        <name>Call_Main_Automation</name>
-        <label>Call Main Automation</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Log_Main_Invoked</targetReference>
-        </connector>
-        <flowName>SUB_QuoteLineItem_Main_Automation_TV</flowName>
-        <inputAssignments>
-            <name>inRecordId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>inCorrelationId</name>
-            <value>
-                <elementReference>varCorrelationId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>inIsNewRecord</name>
-            <value>
-                <elementReference>frmIsNewRecord</elementReference>
-            </value>
-        </inputAssignments>
     </subflows>
     <subflows>
         <name>Log_Main_Invoked</name>
@@ -220,25 +240,6 @@
             </value>
         </inputAssignments>
     </subflows>
-    <start>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Eval_Context</targetReference>
-        </connector>
-        <filterLogic>1</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <object>QuoteLineItem</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
-    </start>
-    <status>Draft</status>
     <variables>
         <name>varCorrelationId</name>
         <dataType>String</dataType>
