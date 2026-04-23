@@ -2,31 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <decisions>
-        <name>Decide_Create_Or_Update</name>
-        <label>Create or Update?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Log_Main_Subflow_Execution</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Update</defaultConnectorLabel>
-        <rules>
-            <name>Is_Create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inIsNewRecord</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Record_Create</targetReference>
-            </connector>
-            <label>Create</label>
-        </rules>
-    </decisions>
     <description>Main automation subflow for Contract — generated from CSV spec. Field updates mapped: 19 (19 create-only, 0 update-only, 0 always). 4 field(s) skipped (no resolvable source reference): Contract_Has_Legacy_Product__c, Master_Contract__c, No_Auto_Renew__c, Original_Contract_ARR__c Admin note: review skipped fields and child-rollup fields manually.</description>
     <environments>Default</environments>
     <interviewLabel>SUB_Contract_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
@@ -78,7 +53,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Decide_Create_Or_Update</targetReference>
+            <targetReference>Update_Record</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -114,8 +89,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Update_Record_Create</name>
-        <label>Update Record — Create-Only Fields</label>
+        <name>Update_Record</name>
+        <label>Update Record — All Fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>

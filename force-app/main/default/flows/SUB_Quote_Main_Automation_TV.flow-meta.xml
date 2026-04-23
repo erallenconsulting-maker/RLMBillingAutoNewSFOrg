@@ -2,31 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <decisions>
-        <name>Decide_Create_Or_Update</name>
-        <label>Create or Update?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Log_Main_Subflow_Execution</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Update</defaultConnectorLabel>
-        <rules>
-            <name>Is_Create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inIsNewRecord</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Record_Create</targetReference>
-            </connector>
-            <label>Create</label>
-        </rules>
-    </decisions>
     <description>Main automation subflow for Quote — generated from CSV spec. Field updates mapped: 13 (13 create-only, 0 update-only, 0 always). 38 field(s) skipped (no resolvable source reference): ContactId, BillToContactId, Pricebook2Id, ContractId, Master_Contract__c, SalesTransactionTypeId, SalesRep__c, Hardware_Quote__c... Admin note: review skipped fields and child-rollup fields manually.</description>
     <environments>Default</environments>
     <interviewLabel>SUB_Quote_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
@@ -57,7 +32,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Decide_Create_Or_Update</targetReference>
+            <targetReference>Update_Record</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -78,7 +53,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_Account</targetReference>
+            <targetReference>Get_OpportunityContactRole</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -90,6 +65,34 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Opportunity</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_OpportunityContactRole</name>
+        <label>Get Opportunity Contact Role</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_Account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Opportunity.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsPrimary</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OpportunityContactRole</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -114,8 +117,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Update_Record_Create</name>
-        <label>Update Record — Create-Only Fields</label>
+        <name>Update_Record</name>
+        <label>Update Record — All Fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
@@ -201,7 +204,19 @@
                 <elementReference>Get_Account.ShippingStreet</elementReference>
             </value>
         </inputAssignments>
-        <object>Quote</object>
+        <inputAssignments>
+            <field>BillToContactId</field>
+            <value>
+                <elementReference>Get_OpportunityContactRole.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsPrimary__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+    <object>Quote</object>
     </recordUpdates>
     <start>
         <locationX>0</locationX>

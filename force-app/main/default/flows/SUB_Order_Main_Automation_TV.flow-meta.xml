@@ -2,31 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <decisions>
-        <name>Decide_Create_Or_Update</name>
-        <label>Create or Update?</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Update_Record_Update</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Update</defaultConnectorLabel>
-        <rules>
-            <name>Is_Create</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>inIsNewRecord</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Update_Record_Create</targetReference>
-            </connector>
-            <label>Create</label>
-        </rules>
-    </decisions>
     <description>Main automation subflow for Order — generated from CSV spec. Field updates mapped: 20 (18 create-only, 1 update-only, 1 always). 11 field(s) skipped (no resolvable source reference): AccountId, Pricebook2Id, ContractId, SalesTransactionTypeId, ContractName, ContractEndDate, Contracted__c, Status... Admin note: review skipped fields and child-rollup fields manually.</description>
     <environments>Default</environments>
     <interviewLabel>SUB_Order_Main_Automation_TV {!$Flow.CurrentDateTime}</interviewLabel>
@@ -119,7 +94,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Decide_Create_Or_Update</targetReference>
+            <targetReference>Update_Record</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -138,8 +113,8 @@
         <object>Order</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Update_Record_Create</name>
-        <label>Update Record — Create-Only Fields</label>
+        <name>Update_Record</name>
+        <label>Update Record — All Fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
@@ -171,7 +146,7 @@
                 <elementReference>Get_Quote.Id</elementReference>
             </value>
         </inputAssignments>
-        <object>Order</object>
+<object>Order</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Record_Update</name>
