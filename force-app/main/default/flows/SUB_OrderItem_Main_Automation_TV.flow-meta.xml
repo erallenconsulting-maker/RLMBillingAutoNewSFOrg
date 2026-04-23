@@ -25,6 +25,7 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+
     <recordLookups>
         <name>Get_Order</name>
         <label>Get Order</label>
@@ -74,7 +75,7 @@
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_QuoteLineItem</targetReference>
+            <targetReference>Has_QuoteLineItem</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -88,6 +89,31 @@
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <decisions>
+        <name>Has_QuoteLineItem</name>
+        <label>Has QuoteLineItem ID?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Update_Record</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - Skip QLI Lookup</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Has_QLI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Triggering_Record.QuoteLineItemId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_QuoteLineItem</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <recordUpdates>
         <name>Update_Record_Always</name>
         <label>Update Record — Always Fields</label>
@@ -154,14 +180,6 @@
         </inputAssignments>
         <object>OrderItem</object>
     </recordUpdates>
-    <start>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Triggering_Record</targetReference>
-        </connector>
-    </start>
-    <status>Active</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>
@@ -211,6 +229,14 @@
             </value>
         </inputAssignments>
     </subflows>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Triggering_Record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
     <variables>
         <name>inCorrelationId</name>
         <dataType>String</dataType>

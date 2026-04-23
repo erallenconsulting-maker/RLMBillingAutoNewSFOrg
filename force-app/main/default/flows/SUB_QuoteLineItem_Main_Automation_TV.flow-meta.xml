@@ -25,6 +25,7 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+
     <recordLookups>
         <name>Get_Product2</name>
         <label>Get Product2</label>
@@ -73,7 +74,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Update_Record</targetReference>
+            <targetReference>Calculate_Revenue</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -139,14 +140,6 @@
         </inputAssignments>
         <object>QuoteLineItem</object>
     </recordUpdates>
-    <start>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Triggering_Record</targetReference>
-        </connector>
-    </start>
-    <status>Active</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>
@@ -196,6 +189,66 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Calculate_Revenue</name>
+        <label>Calculate Revenue Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_Record</targetReference>
+        </connector>
+        <flowName>SUB_QuoteLineItem_Calculate_Revenue_TV</flowName>
+        <inputAssignments>
+            <name>inRecordId</name>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inChargeType</name>
+            <value>
+                <elementReference>Get_Triggering_Record.Charge_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inTotalPrice</name>
+            <value>
+                <elementReference>Get_Triggering_Record.TotalPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inNetTotalPrice</name>
+            <value>
+                <elementReference>Get_Triggering_Record.NetTotalPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inSubscriptionTerm</name>
+            <value>
+                <elementReference>Get_Triggering_Record.SubscriptionTerm</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inDoesAutoRenew</name>
+            <value>
+                <elementReference>Get_Triggering_Record.DoesAutomaticallyRenew</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inEndDate</name>
+            <value>
+                <elementReference>Get_Triggering_Record.EndDate</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Triggering_Record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
     <variables>
         <name>inCorrelationId</name>
         <dataType>String</dataType>
