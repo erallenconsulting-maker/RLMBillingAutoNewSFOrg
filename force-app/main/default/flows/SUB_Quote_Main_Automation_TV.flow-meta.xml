@@ -211,6 +211,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Pricebook2Id</field>
+            <value>
+                <stringValue>01sao000003VWRhAAO</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>IsPrimary__c</field>
             <value>
                 <booleanValue>true</booleanValue>

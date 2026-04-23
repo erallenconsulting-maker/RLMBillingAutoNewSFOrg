@@ -2,31 +2,6 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <decisions>
-        <name>Should_Run_Context</name>
-        <label>Should Run Context</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Log_Skipped</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>varShouldRun</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Call_Main_Automation</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
     <description>Router flow for Order. Calls SUB_Evaluate_Automation_Context_TV then SUB_Order_Main_Automation_TV when context allows. Passes inIsNewRecord so the main subflow can gate create-only vs update-only field assignments.</description>
     <environments>Default</environments>
     <formulas>
@@ -55,6 +30,64 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+
+    <decisions>
+        <name>Should_Run_Context</name>
+        <label>Should Run Context</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Log_Skipped</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varShouldRun</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Should_Create_Contract</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_Create_Contract</name>
+        <label>Should Create Contract?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Call_Main_Automation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - Skip</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Create_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>frmIsNewRecord</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.ContractId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Create_Contract_For_Order</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -74,6 +107,64 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Draft</status>
+    <subflows>
+        <name>Create_Contract_For_Order</name>
+        <label>Create Contract For Order</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Call_Main_Automation</targetReference>
+        </connector>
+        <flowName>SUB_Order_Create_Contract_TV</flowName>
+        <inputAssignments>
+            <name>inOrderId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inAccountId</name>
+            <value>
+                <elementReference>$Record.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inQuoteId</name>
+            <value>
+                <elementReference>$Record.QuoteId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inOpportunityId</name>
+            <value>
+                <elementReference>$Record.OpportunityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inPricebook2Id</name>
+            <value>
+                <elementReference>$Record.Pricebook2Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inOwnerId</name>
+            <value>
+                <elementReference>$Record.OwnerId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inStartDate</name>
+            <value>
+                <elementReference>$Record.EffectiveDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inContractTerm</name>
+            <value>
+                <numberValue>12.0</numberValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Call_Main_Automation</name>
         <label>Call Main Automation</label>
