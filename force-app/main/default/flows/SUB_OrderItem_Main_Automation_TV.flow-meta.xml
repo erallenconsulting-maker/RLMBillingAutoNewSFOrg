@@ -152,18 +152,6 @@
                 <elementReference>Get_QuoteLineItem.Detailed_Line_Description__c</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>Order_Product_Description__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.Detailed_Line_Description__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Order_Product_Description__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.Detailed_Line_Description__c</elementReference>
-            </value>
-        </inputAssignments>
         <object>OrderItem</object>
     </recordUpdates>
     <start>
@@ -173,7 +161,7 @@
             <targetReference>Get_Triggering_Record</targetReference>
         </connector>
     </start>
-    <status>InvalidDraft</status>
+    <status>Active</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>

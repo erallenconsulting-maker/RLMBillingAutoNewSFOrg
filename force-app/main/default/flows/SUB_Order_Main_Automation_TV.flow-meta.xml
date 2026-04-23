@@ -173,7 +173,7 @@
             <targetReference>Get_Triggering_Record</targetReference>
         </connector>
     </start>
-    <status>InvalidDraft</status>
+    <status>Active</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>

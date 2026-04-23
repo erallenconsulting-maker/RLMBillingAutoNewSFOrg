@@ -26,55 +26,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Get_Quote</name>
-        <label>Get Quote</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Update_Record</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_QuoteLineItem.QuoteId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Quote</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_QuoteLineItem</name>
-        <label>Get QuoteLineItem</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Get_Quote</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Triggering_Record.QuoteLineItemId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>QuoteLineItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Get_Triggering_Record</name>
         <label>Get Triggering Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Get_QuoteLineItem</targetReference>
+            <targetReference>Update_Record</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -104,66 +62,6 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>ARR_Category__c</field>
-            <value>
-                <elementReference>Get_Quote.Commercial_Action__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ARR__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.ARR__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Billing_Frequency__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.BillingFrequency__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Charge_Type__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.Charge_Type__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ContactId</field>
-            <value>
-                <elementReference>Get_Quote.ContactId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Detailed_Line_Description__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.Detailed_Line_Description__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DoesAutomaticallyRenew</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.DoesAutomaticallyRenew</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Line_Level_ARR__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.ARR__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Product2Id</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.Product2Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Quantity</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.Quantity</elementReference>
-            </value>
-        </inputAssignments>
         <object>Asset</object>
     </recordUpdates>
     <start>
@@ -173,7 +71,7 @@
             <targetReference>Get_Triggering_Record</targetReference>
         </connector>
     </start>
-    <status>InvalidDraft</status>
+    <status>Active</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>

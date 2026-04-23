@@ -132,12 +132,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Product2Id</field>
-            <value>
-                <elementReference>Get_Product2.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Product_Type__c</field>
             <value>
                 <elementReference>Get_Product2.Techvera_Product_Type__c</elementReference>
@@ -152,7 +146,7 @@
             <targetReference>Get_Triggering_Record</targetReference>
         </connector>
     </start>
-    <status>InvalidDraft</status>
+    <status>Active</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>
