@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Quarterly_12</label>
+    <protected>false</protected>
+    <values>
+        <field>Billing_Frequency__c</field>
+        <value xsi:type="xsd:string">Quarterly</value>
+    </values>
+    <values>
+        <field>Billing_Schedule_Result__c</field>
+        <value xsi:type="xsd:string">Quarterly - 12 months</value>
+    </values>
+    <values>
+        <field>Charge_Type__c</field>
+        <value xsi:type="xsd:string">Recurring</value>
+    </values>
+    <values>
+        <field>Default_Billing_Frequency__c</field>
+        <value xsi:type="xsd:string">Quarterly</value>
+    </values>
+    <values>
+        <field>IsActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Notes__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Subscription_Term__c</field>
+        <value xsi:type="xsd:double">12.0</value>
+    </values>
+</CustomMetadata>

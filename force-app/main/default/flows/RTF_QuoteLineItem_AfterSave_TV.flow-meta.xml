@@ -55,32 +55,14 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <start>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Eval_Context</targetReference>
-        </connector>
-        <filterLogic>1</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <object>QuoteLineItem</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
-    </start>
-    <status>Draft</status>
+
     <subflows>
         <name>Call_Main_Automation</name>
         <label>Call Main Automation</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Log_Main_Invoked</targetReference>
+            <targetReference>Rollup_Quote_Revenue</targetReference>
         </connector>
         <flowName>SUB_QuoteLineItem_Main_Automation_TV</flowName>
         <inputAssignments>
@@ -240,6 +222,41 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Rollup_Quote_Revenue</name>
+        <label>Rollup Quote Revenue</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Log_Main_Invoked</targetReference>
+        </connector>
+        <flowName>SUB_Quote_Rollup_Revenue_TV</flowName>
+        <inputAssignments>
+            <name>inQuoteId</name>
+            <value>
+                <elementReference>$Record.QuoteId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Eval_Context</targetReference>
+        </connector>
+        <filterLogic>1</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>QuoteLineItem</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
     <variables>
         <name>varCorrelationId</name>
         <dataType>String</dataType>

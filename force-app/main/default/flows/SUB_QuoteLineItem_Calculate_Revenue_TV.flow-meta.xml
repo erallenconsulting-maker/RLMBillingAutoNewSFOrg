@@ -18,6 +18,52 @@
         <value><stringValue>LightningFlowBuilder</stringValue></value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+
+
+
+
+    <recordLookups>
+        <name>Get_Billing_Schedule_Map</name>
+        <label>Get Billing Schedule Map</label>
+        <locationX>0</locationX>
+        <locationY>450</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Schedule_Match</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Billing_Frequency__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inBillingFrequency</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Charge_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inChargeType</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subscription_Term__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inSubscriptionTerm</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Billing_Schedule_Map__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <decisions>
         <name>Is_One_Time</name>
         <label>Is One-Time Charge?</label>
@@ -89,6 +135,117 @@
             </conditions>
             <connector>
                 <targetReference>Set_Renewal_Fields</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Schedule_Match</name>
+        <label>Has Schedule Match?</label>
+        <locationX>0</locationX>
+        <locationY>550</locationY>
+        <defaultConnector>
+            <targetReference>Update_QLI_Schedule_NoMatch</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - Needs Review</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Match</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Billing_Schedule_Map.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_QLI_Schedule_Matched</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Subscription_Term</name>
+        <label>Has Subscription Term?</label>
+        <locationX>0</locationX>
+        <locationY>500</locationY>
+        <defaultConnector>
+            <targetReference>Should_Set_EndDate</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - Skip Lookup</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Has_Term</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inSubscriptionTerm</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>inSubscriptionTerm</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Billing_Schedule_Map</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_Set_EndDate</name>
+        <label>Should Set EndDate? (create-only)</label>
+        <locationX>0</locationX>
+        <locationY>750</locationY>
+        <defaultConnectorLabel>No - Skip</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Set_EndDate</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inEndDate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>inStartDate</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_EndDate_Recurring</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_EndDate_Recurring</name>
+        <label>EndDate: Is Recurring?</label>
+        <locationX>0</locationX>
+        <locationY>850</locationY>
+        <defaultConnector>
+            <targetReference>Update_EndDate_OneTime</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - One Time</defaultConnectorLabel>
+        <rules>
+            <name>Yes_EndDate_Recurring</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>inChargeType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recurring</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_EndDate_Recurring</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -216,6 +373,9 @@
         <label>Update QLI Revenue Fields</label>
         <locationX>0</locationX>
         <locationY>400</locationY>
+        <connector>
+            <targetReference>Has_Subscription_Term</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -286,6 +446,108 @@
         </inputAssignments>
         <object>QuoteLineItem</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_QLI_Schedule_Matched</name>
+        <label>Update QLI Schedule (Matched)</label>
+        <locationX>0</locationX>
+        <locationY>650</locationY>
+        <connector>
+            <targetReference>Should_Set_EndDate</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Billing_Schedule__c</field>
+            <value>
+                <elementReference>Get_Billing_Schedule_Map.Billing_Schedule_Result__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Schedule_Status__c</field>
+            <value>
+                <stringValue>Derived</stringValue>
+            </value>
+        </inputAssignments>
+        <object>QuoteLineItem</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_QLI_Schedule_NoMatch</name>
+        <label>Update QLI Schedule (No Match - Custom)</label>
+        <locationX>0</locationX>
+        <locationY>650</locationY>
+        <connector>
+            <targetReference>Should_Set_EndDate</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Billing_Schedule__c</field>
+            <value>
+                <stringValue>Custom</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Billing_Schedule_Status__c</field>
+            <value>
+                <stringValue>Derived</stringValue>
+            </value>
+        </inputAssignments>
+        <object>QuoteLineItem</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_EndDate_Recurring</name>
+        <label>Update EndDate (Recurring: Start + 365)</label>
+        <locationX>0</locationX>
+        <locationY>950</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>EndDate</field>
+            <value>
+                <elementReference>frmEndDateRecurring</elementReference>
+            </value>
+        </inputAssignments>
+        <object>QuoteLineItem</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_EndDate_OneTime</name>
+        <label>Update EndDate (One-Time = StartDate)</label>
+        <locationX>0</locationX>
+        <locationY>950</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>EndDate</field>
+            <value>
+                <elementReference>inStartDate</elementReference>
+            </value>
+        </inputAssignments>
+        <object>QuoteLineItem</object>
+    </recordUpdates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -294,6 +556,7 @@
         </connector>
     </start>
     <status>Active</status>
+
     <formulas>
         <name>frmMRR</name>
         <dataType>Currency</dataType>
@@ -310,6 +573,11 @@
         <name>frmRenewalDate</name>
         <dataType>Date</dataType>
         <expression>IF(NOT(ISBLANK({!inEndDate})), {!inEndDate} + 1, NULL)</expression>
+    </formulas>
+    <formulas>
+        <name>frmEndDateRecurring</name>
+        <dataType>Date</dataType>
+        <expression>{!inStartDate} + 365</expression>
     </formulas>
     <variables>
         <name>inRecordId</name>
@@ -431,6 +699,20 @@
         <dataType>Date</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>inBillingFrequency</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>inStartDate</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

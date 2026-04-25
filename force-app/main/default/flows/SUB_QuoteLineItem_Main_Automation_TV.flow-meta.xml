@@ -211,6 +211,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <name>inBillingFrequency</name>
+            <value>
+                <elementReference>Get_Triggering_Record.BillingFrequency__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>inTotalPrice</name>
             <value>
                 <elementReference>Get_Triggering_Record.TotalPrice</elementReference>
@@ -232,6 +238,12 @@
             <name>inDoesAutoRenew</name>
             <value>
                 <elementReference>Get_Triggering_Record.DoesAutomaticallyRenew</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inStartDate</name>
+            <value>
+                <elementReference>Get_Triggering_Record.StartDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
