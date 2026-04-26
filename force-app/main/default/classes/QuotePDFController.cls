@@ -5,6 +5,7 @@ public with sharing class QuotePDFController {
     public User owner { get; private set; }
     public List<QuoteLineItem> lineItems { get; private set; }
     public String today { get; private set; }
+    public Decimal grandTotal { get; private set; }
     
     public QuotePDFController() {
         Id quoteId = ApexPages.currentPage().getParameters().get('id');
@@ -39,6 +40,21 @@ public with sharing class QuotePDFController {
                      ORDER BY SortOrder ASC NULLS LAST, CreatedDate ASC];
         
         today = Date.today().format();
+        
+        // Compute grand total ourselves since RLM's NetTotalPrice is wrong
+        grandTotal = 0;
+        for (QuoteLineItem li : lineItems) {
+            Decimal lineTotal = 0;
+            if (li.Charge_Type__c == 'One-Time' || li.SubscriptionTerm == null) {
+                lineTotal = (li.UnitPrice == null ? 0 : li.UnitPrice) * (li.Quantity == null ? 0 : li.Quantity);
+            } else {
+                Decimal unit = li.UnitPrice == null ? 0 : li.UnitPrice;
+                Decimal term = li.SubscriptionTerm;
+                Decimal qty = li.Quantity == null ? 0 : li.Quantity;
+                lineTotal = unit * term * qty;
+            }
+            grandTotal += lineTotal;
+        }
     }
     
     public String getFormattedExpirationDate() {

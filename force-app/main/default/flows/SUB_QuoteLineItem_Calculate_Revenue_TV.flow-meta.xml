@@ -2,124 +2,92 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>66.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Set_One_Time_Amount</name>
-        <label>Set One Time Amount</label>
+    <description>Calculates ARR, MRR, Delta ARR, One-Time Amount, Recurring Amount, Renewal Amount ARR, Up For Renewal ARR, EndDate, Renewal Date, Next Renewal Date, and Revenue Calculation Status on QuoteLineItem. Called by SUB_QuoteLineItem_Main_Automation_TV.</description>
+    <environments>Default</environments>
+    <interviewLabel>SUB_QuoteLineItem_Calculate_Revenue_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SUB QuoteLineItem Calculate Revenue TV</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Billing_Schedule_Map</name>
+        <label>Get Billing Schedule Map</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varOneTimeAmount</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>inTotalPrice</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varRecurringAmount</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <numberValue>0.0</numberValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varMRR</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <numberValue>0.0</numberValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varARR</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <numberValue>0.0</numberValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varDeltaARR</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <numberValue>0.0</numberValue>
-            </value>
-        </assignmentItems>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Recurring</targetReference>
+            <targetReference>Has_Schedule_Match</targetReference>
         </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Recurring_Amount</name>
-        <label>Set Recurring Amount and MRR/ARR</label>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Billing_Frequency__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inBillingFrequency</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Charge_Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inChargeType</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subscription_Term__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inSubscriptionTerm</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Billing_Schedule_Map__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Fresh_QLI</name>
+        <label>Get Fresh QLI (avoid stale data)</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varRecurringAmount</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>inTotalPrice</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varMRR</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>frmMRR</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varARR</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>frmARR</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varDeltaARR</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>frmARR</elementReference>
-            </value>
-        </assignmentItems>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Auto_Renew</targetReference>
+            <targetReference>Is_One_Time</targetReference>
         </connector>
-    </assignments>
-    <assignments>
-        <name>Set_Renewal_Fields</name>
-        <label>Set Renewal Fields</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>varRenewalAmountARR</assignToReference>
-            <operator>Assign</operator>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
             <value>
-                <elementReference>inTotalPrice</elementReference>
+                <elementReference>inRecordId</elementReference>
             </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varUpForRenewalARR</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>inTotalPrice</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varRenewalDate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>frmRenewalDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varNextRenewalDate</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>frmRenewalDate</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Update_QLI_Revenue</targetReference>
-        </connector>
-    </assignments>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>QuoteLineItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <decisions>
         <name>Has_Schedule_Match</name>
         <label>Has Schedule Match?</label>
@@ -299,71 +267,125 @@
             <label>EndDate Already Set - Skip</label>
         </rules>
     </decisions>
-    <description>Calculates ARR, MRR, Delta ARR, One-Time Amount, Recurring Amount, Renewal Amount ARR, Up For Renewal ARR, EndDate, Renewal Date, Next Renewal Date, and Revenue Calculation Status on QuoteLineItem. Called by SUB_QuoteLineItem_Main_Automation_TV.</description>
-    <environments>Default</environments>
-    <interviewLabel>SUB_QuoteLineItem_Calculate_Revenue_TV {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>SUB QuoteLineItem Calculate Revenue TV</label>
-    <processMetadataValues>
-        <name>BuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>CanvasMode</name>
-        <value>
-            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
-        </value>
-    </processMetadataValues>
-    <processMetadataValues>
-        <name>OriginBuilderType</name>
-        <value>
-            <stringValue>LightningFlowBuilder</stringValue>
-        </value>
-    </processMetadataValues>
-    <processType>AutoLaunchedFlow</processType>
-    <recordLookups>
-        <name>Get_Billing_Schedule_Map</name>
-        <label>Get Billing Schedule Map</label>
+    <assignments>
+        <name>Set_One_Time_Amount</name>
+        <label>Set One Time Amount</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <assignmentItems>
+            <assignToReference>varOneTimeAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>inTotalPrice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varRecurringAmount</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varMRR</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varARR</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDeltaARR</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Has_Schedule_Match</targetReference>
+            <targetReference>Is_Recurring</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Billing_Frequency__c</field>
-            <operator>EqualTo</operator>
+    </assignments>
+    <assignments>
+        <name>Set_Recurring_Amount</name>
+        <label>Set Recurring Amount and MRR/ARR</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varRecurringAmount</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>inBillingFrequency</elementReference>
+                <elementReference>inTotalPrice</elementReference>
             </value>
-        </filters>
-        <filters>
-            <field>Charge_Type__c</field>
-            <operator>EqualTo</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varMRR</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>inChargeType</elementReference>
+                <elementReference>frmMRR</elementReference>
             </value>
-        </filters>
-        <filters>
-            <field>Subscription_Term__c</field>
-            <operator>EqualTo</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varARR</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <elementReference>inSubscriptionTerm</elementReference>
+                <elementReference>frmARR</elementReference>
             </value>
-        </filters>
-        <filters>
-            <field>IsActive__c</field>
-            <operator>EqualTo</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varDeltaARR</assignToReference>
+            <operator>Assign</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <elementReference>frmARR</elementReference>
             </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Billing_Schedule_Map__mdt</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_Auto_Renew</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Renewal_Fields</name>
+        <label>Set Renewal Fields</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varRenewalAmountARR</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>inTotalPrice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varUpForRenewalARR</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>inTotalPrice</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varRenewalDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>frmRenewalDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varNextRenewalDate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>frmRenewalDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_QLI_Revenue</targetReference>
+        </connector>
+    </assignments>
+
     <recordUpdates>
         <name>Update_EndDate_OneTime</name>
         <label>Update EndDate (One-Time = StartDate)</label>
@@ -377,13 +399,16 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </filters>
+        <object>QuoteLineItem</object>
+    
+    
+    
         <inputAssignments>
             <field>EndDate</field>
             <value>
                 <elementReference>inStartDate</elementReference>
             </value>
         </inputAssignments>
-        <object>QuoteLineItem</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_EndDate_Recurring</name>
@@ -398,13 +423,16 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </filters>
+        <object>QuoteLineItem</object>
+    
+    
+    
         <inputAssignments>
             <field>EndDate</field>
             <value>
                 <elementReference>frmEndDateRecurring</elementReference>
             </value>
         </inputAssignments>
-        <object>QuoteLineItem</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_QLI_Revenue</name>
@@ -422,6 +450,10 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </filters>
+        <object>QuoteLineItem</object>
+    
+    
+    
         <inputAssignments>
             <field>ARR__c</field>
             <value>
@@ -465,12 +497,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Renewal_Date__c</field>
-            <value>
-                <elementReference>varRenewalDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Revenue_Calculation_Status__c</field>
             <value>
                 <stringValue>Calculated</stringValue>
@@ -482,7 +508,14 @@
                 <elementReference>varUpForRenewalARR</elementReference>
             </value>
         </inputAssignments>
-        <object>QuoteLineItem</object>
+        <inputAssignments>
+            <field>EndDate</field>
+            <value><elementReference>frmEndDateRecurring</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Renewal_Date__c</field>
+            <value><elementReference>frmEndDateRecurring</elementReference></value>
+        </inputAssignments>
     </recordUpdates>
     <recordUpdates>
         <name>Update_QLI_Schedule_Matched</name>
@@ -500,6 +533,10 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </filters>
+        <object>QuoteLineItem</object>
+    
+    
+    
         <inputAssignments>
             <field>Billing_Schedule_Status__c</field>
             <value>
@@ -512,7 +549,6 @@
                 <elementReference>Get_Billing_Schedule_Map.Billing_Schedule_Result__c</elementReference>
             </value>
         </inputAssignments>
-        <object>QuoteLineItem</object>
     </recordUpdates>
     <recordUpdates>
         <name>Update_QLI_Schedule_NoMatch</name>
@@ -530,6 +566,10 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </filters>
+        <object>QuoteLineItem</object>
+    
+    
+    
         <inputAssignments>
             <field>Billing_Schedule_Status__c</field>
             <value>
@@ -542,13 +582,13 @@
                 <stringValue>Custom</stringValue>
             </value>
         </inputAssignments>
-        <object>QuoteLineItem</object>
     </recordUpdates>
+
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_One_Time</targetReference>
+            <targetReference>Get_Fresh_QLI</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -561,24 +601,18 @@
     <formulas>
         <name>frmEndDateRecurring</name>
         <dataType>Date</dataType>
-        <expression>{!inStartDate} + 365</expression>
+        <expression>IF(ISBLANK({!Get_Fresh_QLI.SubscriptionTerm}), {!Get_Fresh_QLI.StartDate} + 365, ADDMONTHS({!Get_Fresh_QLI.StartDate}, {!Get_Fresh_QLI.SubscriptionTerm}))</expression>
     </formulas>
     <formulas>
         <name>frmMRR</name>
         <dataType>Currency</dataType>
-        <expression>IF({!inSubscriptionTerm} &gt; 0, {!inNetTotalPrice} / {!inSubscriptionTerm}, {!inNetTotalPrice} / 12)</expression>
+        <expression>IF({!Get_Fresh_QLI.SubscriptionTerm} &gt; 0, {!Get_Fresh_QLI.NetTotalPrice} / {!Get_Fresh_QLI.SubscriptionTerm}, {!Get_Fresh_QLI.NetTotalPrice} / 12)</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
         <name>frmRenewalDate</name>
         <dataType>Date</dataType>
-        <expression>IF(NOT(ISBLANK({!inEndDate})), {!inEndDate} + 1, NULL)</expression>
-    </formulas>
-    <formulas>
-        <name>frmPricingTermCount</name>
-        <dataType>Number</dataType>
-        <scale>2</scale>
-        <expression>IF({!inChargeType} = "One-Time", 1, IF(ISBLANK({!inSubscriptionTerm}), 0, {!inSubscriptionTerm}))</expression>
+        <expression>IF(NOT(ISBLANK({!Get_Fresh_QLI.EndDate})), {!Get_Fresh_QLI.EndDate} + 1, NULL)</expression>
     </formulas>
     <variables>
         <name>inBillingFrequency</name>
@@ -715,5 +749,21 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <scale>2</scale>
+    </variables>
+    <variables>
+        <name>inUnitPrice</name>
+        <dataType>Currency</dataType>
+        <scale>2</scale>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>inQuantity</name>
+        <dataType>Number</dataType>
+        <scale>2</scale>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
 </Flow>

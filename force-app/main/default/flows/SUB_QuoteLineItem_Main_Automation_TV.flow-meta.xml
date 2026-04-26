@@ -68,13 +68,46 @@
         <object>QuoteLineItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <decisions>
+        <name>Eval_Auto_Renew</name>
+        <label>Should Auto Renew?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Calculate_Revenue</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No - Skip</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Auto_Renew</name>
+            <conditionLogic>1 OR 2</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Triggering_Record.Charge_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Recurring</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Product2.DoesAutomaticallyRenew__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Auto_Renew_True</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+
     <recordUpdates>
         <name>Update_Record_Always</name>
         <label>Update Record — Always Fields</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Calculate_Revenue</targetReference>
+            <targetReference>Eval_Auto_Renew</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -84,6 +117,8 @@
                 <elementReference>inRecordId</elementReference>
             </value>
         </filters>
+        <object>QuoteLineItem</object>
+    
         <inputAssignments>
             <field>BillingFrequency__c</field>
             <value>
@@ -96,7 +131,10 @@
                 <elementReference>Get_Product2.Default_Charge_Type__c</elementReference>
             </value>
         </inputAssignments>
-        <object>QuoteLineItem</object>
+            <inputAssignments>
+            <field>Product_Family__c</field>
+            <value><elementReference>Get_Product2.Family</elementReference></value>
+        </inputAssignments>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Record</name>
@@ -136,6 +174,30 @@
             <field>Product_Type__c</field>
             <value>
                 <elementReference>Get_Product2.Techvera_Product_Type__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>QuoteLineItem</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Auto_Renew_True</name>
+        <label>Set Auto Renew TRUE</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Calculate_Revenue</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>inRecordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>DoesAutomaticallyRenew</field>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <object>QuoteLineItem</object>
@@ -252,6 +314,18 @@
                 <elementReference>Get_Triggering_Record.EndDate</elementReference>
             </value>
         </inputAssignments>
+            <inputAssignments>
+            <name>inUnitPrice</name>
+            <value>
+                <elementReference>Get_Triggering_Record.UnitPrice</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inQuantity</name>
+            <value>
+                <elementReference>Get_Triggering_Record.Quantity</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <start>
         <locationX>0</locationX>
@@ -261,6 +335,7 @@
         </connector>
     </start>
     <status>Active</status>
+
     <variables>
         <name>inCorrelationId</name>
         <dataType>String</dataType>

@@ -47,7 +47,6 @@ table.lineitems td.center { text-align: center; }
     <div class="subtitle">Order Form</div>
 </div>
 
-<!-- LINE ITEMS TABLE -->
 <table class="lineitems">
     <thead>
         <tr>
@@ -59,7 +58,7 @@ table.lineitems td.center { text-align: center; }
             <th style="width:10%">BILLING FREQUENCY</th>
             <th style="width:7%">Term (Months)</th>
             <th style="width:9%">Start Date</th>
-            <th style="width:13%">Net Unit Price (Disc. Unit x Billing Frequency)</th>
+            <th style="width:13%">Net Unit Price (Disc. Unit x Term)</th>
             <th style="width:14%">TOTAL (Quantity x Net Unit)</th>
         </tr>
     </thead>
@@ -75,27 +74,25 @@ table.lineitems td.center { text-align: center; }
                 <td class="num"><apex:outputText value="{0,number,#,##0.0}"><apex:param value="{!IF(li.Discount = null, 0, li.Discount)}"/></apex:outputText>%</td>
                 <td class="num"><apex:outputText value="{0,number,$#,##0.00}"><apex:param value="{!li.UnitPrice}"/></apex:outputText></td>
                 <td class="center"><apex:outputText value="{!li.BillingFrequency__c}"/></td>
-                <td class="center"><apex:outputText value="{!li.SubscriptionTerm}"/></td>
+                <td class="center"><apex:outputText value="{!IF(li.Charge_Type__c = 'One-Time', '—', IF(li.SubscriptionTerm = null, '', TEXT(li.SubscriptionTerm)))}"/></td>
                 <td class="center"><apex:outputText value="{0,date,MM-dd-yyyy}"><apex:param value="{!li.StartDate}"/></apex:outputText></td>
-                <td class="num"><apex:outputText value="{0,number,$#,##0.00}"><apex:param value="{!li.NetUnitPrice}"/></apex:outputText></td>
-                <td class="num"><apex:outputText value="{0,number,$#,##0.00}"><apex:param value="{!li.NetTotalPrice}"/></apex:outputText></td>
+                <td class="num"><apex:outputText value="{0,number,$#,##0.00}"><apex:param value="{!IF(li.Charge_Type__c = 'One-Time', li.UnitPrice, IF(li.SubscriptionTerm = null, li.UnitPrice, li.UnitPrice * li.SubscriptionTerm))}"/></apex:outputText></td>
+                <td class="num"><apex:outputText value="{0,number,$#,##0.00}"><apex:param value="{!IF(li.Charge_Type__c = 'One-Time', li.UnitPrice * li.Quantity, IF(li.SubscriptionTerm = null, li.UnitPrice * li.Quantity, li.UnitPrice * li.SubscriptionTerm * li.Quantity))}"/></apex:outputText></td>
             </tr>
         </apex:repeat>
         <tr class="total-row">
             <td colspan="8"></td>
             <td class="num">ORDER TOTAL:</td>
-            <td class="num"><apex:outputText value="{0,number,$#,##0.00}"><apex:param value="{!q.GrandTotal}"/></apex:outputText></td>
+            <td class="num"><apex:outputText value="{0,number,$#,##0.00}"><apex:param value="{!grandTotal}"/></apex:outputText></td>
         </tr>
     </tbody>
 </table>
 
-<!-- SPECIAL TERMS -->
 <div class="special-terms">
     <div class="label">Special Terms</div>
     <apex:outputText value="{!IF(NOT(ISBLANK(q.Special_Terms__c)), q.Special_Terms__c, '')}" escape="false"/>
 </div>
 
-<!-- PREPARED FOR / PREPARED BY / DETAILS -->
 <table class="three-col">
     <thead>
         <tr>
@@ -133,13 +130,11 @@ table.lineitems td.center { text-align: center; }
     </tbody>
 </table>
 
-<!-- LEGAL TEXT -->
 <div class="legal">
 This Order Form is subject to and governed by the Techvera LLC Master Services Agreement available online at: <strong>https://techvera.com/services-information-hub/</strong> (MSA), the terms of which MSA are hereby incorporated by reference; provided, however, that if a Master Services Agreement is attached hereto or is separately signed between the parties, this Order Form is subject to and governed by the terms of such MSA, which are hereby incorporated by reference.<br/><br/>
 Taxes, shipping, handling and other fees may apply. To ensure uninterrupted service, Client agrees to maintain a valid payment method on file with Techvera. Recurring service invoices will be automatically charged to the payment method on file on or after the invoice due date. We reserve the right to cancel orders arising from pricing or other errors.
 </div>
 
-<!-- SIGNATURE BLOCK -->
 <table class="signatures">
     <tr>
         <td class="label">Signature:</td>
