@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <description>Sets Quote.Ordered__c=TRUE when Status becomes Accepted or Approved. Idempotent — only updates when transitioning from false to true.</description>
+    <environments>Default</environments>
+    <interviewLabel>SUB_Quote_Set_Ordered_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SUB Quote Set Ordered TV</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value><stringValue>LightningFlowBuilder</stringValue></value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value><stringValue>AUTO_LAYOUT_CANVAS</stringValue></value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <decisions>
+        <name>Should_Set_Ordered</name>
+        <label>Should Set Ordered?</label>
+        <locationX>0</locationX>
+        <locationY>100</locationY>
+        <defaultConnectorLabel>No - Skip</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>inStatus</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>Accepted</stringValue></rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>inStatus</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><stringValue>Approved</stringValue></rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>inOrdered</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue><booleanValue>false</booleanValue></rightValue>
+            </conditions>
+            <connector><targetReference>Update_Quote_Ordered</targetReference></connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <recordUpdates>
+        <name>Update_Quote_Ordered</name>
+        <label>Update Quote Ordered</label>
+        <locationX>0</locationX>
+        <locationY>200</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value><elementReference>inRecordId</elementReference></value>
+        </filters>
+        <inputAssignments>
+            <field>Ordered__c</field>
+            <value><booleanValue>true</booleanValue></value>
+        </inputAssignments>
+        <object>Quote</object>
+    </recordUpdates>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector><targetReference>Should_Set_Ordered</targetReference></connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>inRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>inStatus</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>inOrdered</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

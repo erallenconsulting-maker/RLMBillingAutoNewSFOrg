@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <description>Record-triggered: fires when Quote.Ordered__c changes from false to true. Calls SUB_Quote_Create_Order_TV.</description>
+    <environments>Default</environments>
+    <interviewLabel>RTF_Quote_AutoOrder_TV {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>RTF Quote AutoOrder TV</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value><stringValue>LightningFlowBuilder</stringValue></value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value><stringValue>AUTO_LAYOUT_CANVAS</stringValue></value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <subflows>
+        <name>Call_Create_Order</name>
+        <label>Call Create Order</label>
+        <locationX>0</locationX>
+        <locationY>100</locationY>
+        <flowName>SUB_Quote_Create_Order_TV</flowName>
+        <inputAssignments>
+            <name>inQuoteId</name>
+            <value><elementReference>$Record.Id</elementReference></value>
+        </inputAssignments>
+    </subflows>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector><targetReference>Call_Create_Order</targetReference></connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Ordered__c</field>
+            <operator>EqualTo</operator>
+            <value><booleanValue>true</booleanValue></value>
+        </filters>
+        <object>Quote</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+    </start>
+    <status>Active</status>
+</Flow>

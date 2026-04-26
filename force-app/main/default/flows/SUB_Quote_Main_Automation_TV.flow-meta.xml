@@ -25,6 +25,8 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+
+
     <recordLookups>
         <name>Get_Account</name>
         <label>Get Account</label>
@@ -224,14 +226,6 @@
         </inputAssignments>
     <object>Quote</object>
     </recordUpdates>
-    <start>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Get_Triggering_Record</targetReference>
-        </connector>
-    </start>
-    <status>Draft</status>
     <subflows>
         <name>Log_Main_Subflow_Execution</name>
         <label>Log Main Subflow Execution</label>
@@ -281,6 +275,74 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Call_Set_Ordered</name>
+        <label>Call Set Ordered</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>SUB_Quote_Set_Ordered_TV</flowName>
+        <inputAssignments>
+            <name>inRecordId</name>
+            <value><elementReference>inRecordId</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inStatus</name>
+            <value><elementReference>Get_Triggering_Record.Status</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inOrdered</name>
+            <value><elementReference>Get_Triggering_Record.Ordered__c</elementReference></value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Call_Rollup_To_Opportunity</name>
+        <label>Call Rollup To Opportunity</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>SUB_Quote_Rollup_To_Opportunity_TV</flowName>
+        <inputAssignments>
+            <name>inOpportunityId</name>
+            <value><elementReference>Get_Triggering_Record.OpportunityId</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inIsPrimary</name>
+            <value><elementReference>Get_Triggering_Record.IsPrimary__c</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inStatus</name>
+            <value><elementReference>Get_Triggering_Record.Status</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inTotalARR</name>
+            <value><elementReference>Get_Triggering_Record.Total_ARR__c</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inTotalRenewalARR</name>
+            <value><elementReference>Get_Triggering_Record.Total_Renewal_ARR__c</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inTotalUpForRenewalARR</name>
+            <value><elementReference>Get_Triggering_Record.Total_Up_For_Renewal_ARR__c</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inRenewalDate</name>
+            <value><elementReference>Get_Triggering_Record.Renewal_Date__c</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inNextRenewalDate</name>
+            <value><elementReference>Get_Triggering_Record.Next_Renewal_Date__c</elementReference></value>
+        </inputAssignments>
+    </subflows>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Triggering_Record</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+
+
     <variables>
         <name>inCorrelationId</name>
         <dataType>String</dataType>

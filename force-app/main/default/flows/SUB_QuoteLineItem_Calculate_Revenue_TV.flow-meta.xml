@@ -301,28 +301,6 @@
     </decisions>
     <description>Calculates ARR, MRR, Delta ARR, One-Time Amount, Recurring Amount, Renewal Amount ARR, Up For Renewal ARR, EndDate, Renewal Date, Next Renewal Date, and Revenue Calculation Status on QuoteLineItem. Called by SUB_QuoteLineItem_Main_Automation_TV.</description>
     <environments>Default</environments>
-    <formulas>
-        <name>frmARR</name>
-        <dataType>Currency</dataType>
-        <expression>{!frmMRR} * 12</expression>
-        <scale>2</scale>
-    </formulas>
-    <formulas>
-        <name>frmEndDateRecurring</name>
-        <dataType>Date</dataType>
-        <expression>{!inStartDate} + 365</expression>
-    </formulas>
-    <formulas>
-        <name>frmMRR</name>
-        <dataType>Currency</dataType>
-        <expression>IF({!inSubscriptionTerm} &gt; 0, {!inNetTotalPrice} / {!inSubscriptionTerm}, {!inNetTotalPrice} / 12)</expression>
-        <scale>2</scale>
-    </formulas>
-    <formulas>
-        <name>frmRenewalDate</name>
-        <dataType>Date</dataType>
-        <expression>IF(NOT(ISBLANK({!inEndDate})), {!inEndDate} + 1, NULL)</expression>
-    </formulas>
     <interviewLabel>SUB_QuoteLineItem_Calculate_Revenue_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SUB QuoteLineItem Calculate Revenue TV</label>
     <processMetadataValues>
@@ -574,6 +552,34 @@
         </connector>
     </start>
     <status>Active</status>
+    <formulas>
+        <name>frmARR</name>
+        <dataType>Currency</dataType>
+        <expression>{!frmMRR} * 12</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>frmEndDateRecurring</name>
+        <dataType>Date</dataType>
+        <expression>{!inStartDate} + 365</expression>
+    </formulas>
+    <formulas>
+        <name>frmMRR</name>
+        <dataType>Currency</dataType>
+        <expression>IF({!inSubscriptionTerm} &gt; 0, {!inNetTotalPrice} / {!inSubscriptionTerm}, {!inNetTotalPrice} / 12)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>frmRenewalDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(NOT(ISBLANK({!inEndDate})), {!inEndDate} + 1, NULL)</expression>
+    </formulas>
+    <formulas>
+        <name>frmPricingTermCount</name>
+        <dataType>Number</dataType>
+        <scale>2</scale>
+        <expression>IF({!inChargeType} = "One-Time", 1, IF(ISBLANK({!inSubscriptionTerm}), 0, {!inSubscriptionTerm}))</expression>
+    </formulas>
     <variables>
         <name>inBillingFrequency</name>
         <dataType>String</dataType>

@@ -4,11 +4,6 @@
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <description>Router flow for Order. Calls SUB_Evaluate_Automation_Context_TV then SUB_Order_Main_Automation_TV when context allows. Passes inIsNewRecord so the main subflow can gate create-only vs update-only field assignments.</description>
     <environments>Default</environments>
-    <formulas>
-        <name>frmIsNewRecord</name>
-        <dataType>Boolean</dataType>
-        <expression>ISBLANK({!$Record__Prior.Id})</expression>
-    </formulas>
     <interviewLabel>RTF_Order_AfterSave_TV {!$Flow.CurrentDateTime}</interviewLabel>
     <label>RTF Order AfterSave TV</label>
     <processMetadataValues>
@@ -30,6 +25,7 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+
 
 
     <decisions>
@@ -89,25 +85,6 @@
             <label>Yes</label>
         </rules>
     </decisions>
-    <start>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Eval_Context</targetReference>
-        </connector>
-        <filterLogic>1</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
-        <object>Order</object>
-        <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
-    </start>
-    <status>Draft</status>
     <subflows>
         <name>Create_Contract_For_Order</name>
         <label>Create Contract For Order</label>
@@ -332,6 +309,54 @@
             </value>
         </inputAssignments>
     </subflows>
+    <subflows>
+        <name>Call_Create_LineItems</name>
+        <label>Call Create LineItems</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>SUB_Order_Create_LineItems_TV</flowName>
+        <inputAssignments>
+            <name>inOrderId</name>
+            <value><elementReference>$Record.Id</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inQuoteId</name>
+            <value><elementReference>$Record.QuoteId</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inAccountId</name>
+            <value><elementReference>$Record.AccountId</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>inOpportunityId</name>
+            <value><elementReference>$Record.OpportunityId</elementReference></value>
+        </inputAssignments>
+    </subflows>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Eval_Context</targetReference>
+        </connector>
+        <filterLogic>1</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <object>Order</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+
+    <formulas>
+        <name>frmIsNewRecord</name>
+        <dataType>Boolean</dataType>
+        <expression>ISBLANK({!$Record__Prior.Id})</expression>
+    </formulas>
     <variables>
         <name>varCorrelationId</name>
         <dataType>String</dataType>
