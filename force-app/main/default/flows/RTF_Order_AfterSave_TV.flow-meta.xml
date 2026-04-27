@@ -26,8 +26,6 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
 
-
-
     <decisions>
         <name>Should_Run_Context</name>
         <label>Should Run Context</label>
@@ -307,29 +305,6 @@
             <value>
                 <elementReference>varStopReason</elementReference>
             </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Call_Create_LineItems</name>
-        <label>Call Create LineItems</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>SUB_Order_Create_LineItems_TV</flowName>
-        <inputAssignments>
-            <name>inOrderId</name>
-            <value><elementReference>$Record.Id</elementReference></value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>inQuoteId</name>
-            <value><elementReference>$Record.QuoteId</elementReference></value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>inAccountId</name>
-            <value><elementReference>$Record.AccountId</elementReference></value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>inOpportunityId</name>
-            <value><elementReference>$Record.OpportunityId</elementReference></value>
         </inputAssignments>
     </subflows>
     <start>

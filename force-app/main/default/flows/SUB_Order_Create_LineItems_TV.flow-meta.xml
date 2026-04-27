@@ -66,6 +66,10 @@
         <locationX>0</locationX>
         <locationY>400</locationY>
         <connector><targetReference>Loop_QLIs</targetReference></connector>
+        <object>OrderItem</object>
+    
+    
+    
         <inputAssignments>
             <field>OrderId</field>
             <value><elementReference>inOrderId</elementReference></value>
@@ -106,7 +110,14 @@
             <field>EndDate</field>
             <value><elementReference>Loop_QLIs.EndDate</elementReference></value>
         </inputAssignments>
-        <object>OrderItem</object>
+        <inputAssignments>
+            <field>SubscriptionTerm</field>
+            <value><elementReference>Loop_QLIs.SubscriptionTerm</elementReference></value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DoesAutomaticallyRenew</field>
+            <value><elementReference>Loop_QLIs.DoesAutomaticallyRenew</elementReference></value>
+        </inputAssignments>
     </recordCreates>
     <recordCreates>
         <name>Create_Partner_Sub</name>
@@ -114,6 +125,10 @@
         <locationX>0</locationX>
         <locationY>400</locationY>
         <connector><targetReference>Loop_QLIs</targetReference></connector>
+        <object>Partner_Subscription__c</object>
+    
+    
+    
         <inputAssignments>
             <field>Account__c</field>
             <value><elementReference>inAccountId</elementReference></value>
@@ -159,14 +174,13 @@
             <value><elementReference>Loop_QLIs.BillingFrequency__c</elementReference></value>
         </inputAssignments>
         <inputAssignments>
-            <field>Billing_Schedule__c</field>
-            <value><elementReference>Loop_QLIs.Billing_Schedule__c</elementReference></value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Active__c</field>
             <value><booleanValue>true</booleanValue></value>
         </inputAssignments>
-        <object>Partner_Subscription__c</object>
+            <inputAssignments>
+            <field>Do_Not_Sync__c</field>
+            <value><booleanValue>true</booleanValue></value>
+        </inputAssignments>
     </recordCreates>
     <start>
         <locationX>0</locationX>
@@ -174,6 +188,7 @@
         <connector><targetReference>Get_QLIs</targetReference></connector>
     </start>
     <status>Active</status>
+
     <variables>
         <name>inOrderId</name>
         <dataType>String</dataType>

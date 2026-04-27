@@ -27,6 +27,9 @@
         <connector>
             <targetReference>Update_Order_With_Contract</targetReference>
         </connector>
+        <object>Contract</object>
+    
+    
         <inputAssignments>
             <field>AccountId</field>
             <value>
@@ -81,7 +84,6 @@
                 <stringValue>Draft</stringValue>
             </value>
         </inputAssignments>
-        <object>Contract</object>
     </recordCreates>
     <recordUpdates>
         <name>Update_Order_With_Contract</name>
@@ -112,6 +114,7 @@
         </connector>
     </start>
     <status>Active</status>
+
     <variables>
         <name>inAccountId</name>
         <dataType>String</dataType>

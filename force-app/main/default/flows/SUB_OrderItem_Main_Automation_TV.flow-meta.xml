@@ -155,18 +155,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Hardware_Order__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.Hardware_Product__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Legacy__c</field>
-            <value>
-                <elementReference>Get_QuoteLineItem.Legacy__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Quantity</field>
             <value>
                 <elementReference>Get_QuoteLineItem.Quantity</elementReference>

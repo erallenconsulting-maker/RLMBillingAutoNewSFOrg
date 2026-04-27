@@ -46,39 +46,11 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Call_Main_Automation</targetReference>
+                <targetReference>Eval_Context</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
     </decisions>
-    <subflows>
-        <name>Call_Main_Automation</name>
-        <label>Call Main Automation</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Log_Main_Invoked</targetReference>
-        </connector>
-        <flowName>SUB_Contract_Main_Automation_TV</flowName>
-        <inputAssignments>
-            <name>inRecordId</name>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>inCorrelationId</name>
-            <value>
-                <elementReference>varCorrelationId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>inIsNewRecord</name>
-            <value>
-                <elementReference>frmIsNewRecord</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
     <subflows>
         <name>Eval_Context</name>
         <label>Evaluate Automation Context</label>
@@ -209,17 +181,6 @@
             <value>
                 <elementReference>varStopReason</elementReference>
             </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Call_Rollup_To_Account</name>
-        <label>Call Rollup To Account</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <flowName>SUB_Contract_Rollup_To_Account_TV</flowName>
-        <inputAssignments>
-            <name>inAccountId</name>
-            <value><elementReference>$Record.AccountId</elementReference></value>
         </inputAssignments>
     </subflows>
     <start>
